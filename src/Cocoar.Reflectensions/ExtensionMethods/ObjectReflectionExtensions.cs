@@ -127,23 +127,6 @@ namespace Cocoar.Reflectensions.ExtensionMethods
                 }
             }
 
-            //if (type == typeof(DateTime))
-            //{
-            //    if (value is string str)
-            //    {
-            //        if (str.IsDateTime())
-            //        {
-            //            outValue = str.ToDateTime();
-            //            return true;
-            //        }
-            //        else
-            //        {
-            //            outValue = null;
-            //            return false;
-            //        }
-            //    }
-            //}
-
             if (type.IsNumericType())
             {
                 try

@@ -71,26 +71,5 @@ namespace Cocoar.Reflectensions.Tests.Invoketests {
             Assert.Equal(7, floorCount);
         }
 
-        //[Fact]
-        //public void InvokeSync_Static_ToJson() {
-
-        //    var building = new Building(7);
-        //    building.WindowCount = 78;
-
-        //    var type = TypeHelper.FindType("Newtonsoft.Json.JsonConvert");
-            
-        //    var method = type.GetMethods().WithName("SerializeObject").FirstOrDefault();
-        //    var json = InvokeHelper.InvokeMethod<string>(null, method, building);
-        //    _output.WriteLine(json);
-
-        //    var type2 = TypeHelper.FindType("doob.Reflectensions.Json");
-        //    var inst2 = Activator.CreateInstance(type2);
-        //    var method2 = type2.GetMethod("ToJson");
-        //    var json2 = InvokeHelper.InvokeMethod<string>(inst2, method2, building, true);
-        //    _output.WriteLine(json2);
-
-
-        //}
-
     }
 }
