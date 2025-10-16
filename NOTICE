@@ -1,0 +1,21 @@
+Cocoar.Reflectensions
+Copyright (c) 2025 COCOAR e.U.
+
+Advanced reflection utilities for .NET
+Type parsing • Fluent extensions • Smart conversion • Dynamic invocation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+You may not use this project except in compliance with the License.
+You may obtain a copy at: http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+This library is based on the original doob.Reflectensions (v6.4.2)
+by Bernhard Windisch, now maintained by COCOAR e.U.
+
+Third-Party Notices:
+- Newtonsoft.Json (used in Cocoar.Reflectensions.Json package)
+  Copyright (c) James Newton-King
+  Licensed under MIT License

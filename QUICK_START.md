@@ -1,24 +1,24 @@
-# Reflectensions Quick Start Guide
+# Cocoar.Reflectensions Quick Start Guide
 
-Get up and running with Reflectensions in minutes!
+Get up and running with Cocoar.Reflectensions in minutes!
 
 ## 🚀 Installation
 
 ```bash
 # Core library (type helpers and reflection)
-dotnet add package doob.Reflectensions
+dotnet add package Cocoar.Reflectensions
 
 # Common extensions (string, enum, array helpers)
-dotnet add package doob.Reflectensions.CommonExtensions
+dotnet add package Cocoar.Reflectensions.CommonExtensions
 
 # Method invocation helpers
-dotnet add package doob.Reflectensions.Invoke
+dotnet add package Cocoar.Reflectensions.Invoke
 
 # JSON utilities (Newtonsoft.Json)
-dotnet add package doob.Reflectensions.Json
+dotnet add package Cocoar.Reflectensions.Json
 
 # Dynamic/expandable objects
-dotnet add package doob.Reflectensions.ExpandableObject
+dotnet add package Cocoar.Reflectensions.ExpandableObject
 ```
 
 ## 💡 5-Minute Tutorial
@@ -26,7 +26,7 @@ dotnet add package doob.Reflectensions.ExpandableObject
 ### 1. Parse Complex Type Names
 
 ```csharp
-using doob.Reflectensions;
+using Cocoar.Reflectensions;
 
 // Parse a complex generic type from a string
 var type = TypeHelper.FindType("Dictionary<string, List<int>>");
@@ -41,7 +41,7 @@ var type2 = TypeHelper.FindType("List<number>", mapping);
 ### 2. Fluent Reflection Queries
 
 ```csharp
-using doob.Reflectensions;
+using Cocoar.Reflectensions;
 
 // Find methods fluently
 var calculateMethods = typeof(Calculator)

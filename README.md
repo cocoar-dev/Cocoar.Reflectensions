@@ -1,10 +1,11 @@
-# Reflectensions
+# Cocoar.Reflectensions
 
 [![.NET 8.0](https://img.shields.io/badge/.NET-8.0-blue)](https://dotnet.microsoft.com/download)
 [![.NET Standard 2.0](https://img.shields.io/badge/.NET%20Standard-2.0-blue)](https://docs.microsoft.com/en-us/dotnet/standard/net-standard)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![NuGet](https://img.shields.io/nuget/v/Cocoar.Reflectensions.svg)](https://www.nuget.org/packages/Cocoar.Reflectensions/)
 
-**Reflectensions** is a comprehensive .NET library that simplifies working with C# Reflection and Type operations. It provides powerful utilities for type parsing, reflection queries, type conversion, and dynamic invocation - making reflection code more readable, maintainable, and efficient.
+**Cocoar.Reflectensions** is a comprehensive .NET library that simplifies working with C# Reflection and Type operations. It provides powerful utilities for type parsing, reflection queries, type conversion, and dynamic invocation - making reflection code more readable, maintainable, and efficient.
 
 ## 🎯 Why Reflectensions?
 
@@ -20,32 +21,30 @@ Reflectensions is split into focused packages:
 
 | Package | Description | Use When |
 |---------|-------------|----------|
-| **Reflectensions** | Core type helpers and reflection extensions | Working with types and reflection |
-| **Reflectensions.CommonExtensions** | String, enum, array extensions | Need common utility extensions |
-| **Reflectensions.Invoke** | Method invocation helpers | Dynamically calling methods |
-| **Reflectensions.Json** | JSON conversion utilities (Newtonsoft.Json) | Working with JSON serialization |
-| **Reflectensions.ExpandableObject** | Dynamic object support | Creating dynamic/expandable objects |
+| **Cocoar.Reflectensions** | Core type helpers and reflection extensions | Working with types and reflection |
+| **Cocoar.Reflectensions.CommonExtensions** | String, enum, array extensions | Need common utility extensions |
+| **Cocoar.Reflectensions.Invoke** | Method invocation helpers | Dynamically calling methods |
+| **Cocoar.Reflectensions.Json** | JSON conversion utilities (Newtonsoft.Json) | Working with JSON serialization |
+| **Cocoar.Reflectensions.ExpandableObject** | Dynamic object support | Creating dynamic/expandable objects |
 
 ## 🚀 Quick Start
 
 ```bash
 # Core library (type helpers and reflection)
-dotnet add package doob.Reflectensions
+dotnet add package Cocoar.Reflectensions
 
 # Common extensions (string, enum, array helpers)
-dotnet add package doob.Reflectensions.CommonExtensions
+dotnet add package Cocoar.Reflectensions.CommonExtensions
 
 # Method invocation helpers
-dotnet add package doob.Reflectensions.Invoke
+dotnet add package Cocoar.Reflectensions.Invoke
 
 # JSON utilities (Newtonsoft.Json)
-dotnet add package doob.Reflectensions.Json
+dotnet add package Cocoar.Reflectensions.Json
 
 # Dynamic/expandable objects
-dotnet add package doob.Reflectensions.ExpandableObject
+dotnet add package Cocoar.Reflectensions.ExpandableObject
 ```
-
-## ✨ Key Features
 
 ## ✨ Key Features
 
@@ -54,7 +53,7 @@ dotnet add package doob.Reflectensions.ExpandableObject
 Parse complex type names from strings, including generics, arrays, and custom mappings:
 
 ```csharp
-using doob.Reflectensions;
+using Cocoar.Reflectensions;
 
 // Parse complex generic types
 var type1 = TypeHelper.FindType("Dictionary<string, List<int>>");
@@ -402,10 +401,10 @@ var testMethods = typeof(TestClass).GetMethods()
 
 ## 🏗️ Architecture
 
-Reflectensions is designed with modularity in mind:
+Cocoar.Reflectensions is designed with modularity in mind:
 
 - **Core Library**: Type resolution, reflection extensions, base utilities
-- **Specialized Packages**: Domain-specific functionality (JSON, Invoke, AspNetCore)
+- **Specialized Packages**: Domain-specific functionality (JSON, Invoke, ExpandableObject)
 - **Zero Dependencies**: Core library has no external dependencies (except .NET itself)
 - **Multi-Targeting**: Supports modern .NET and legacy frameworks
 
@@ -414,41 +413,97 @@ Reflectensions is designed with modularity in mind:
 - **.NET 8.0** or later (recommended)
 - **.NET Standard 2.0** compatible runtime (.NET Core 2.0+, .NET 5+, .NET Framework 4.6.1+)
 
-## 🔄 Migration from v6.x
+## 🔄 Migration from doob.Reflectensions
 
-Version 7.0 brings modernization:
+This is the first release under the Cocoar organization. If you're migrating from `doob.Reflectensions` (v6.4.2):
 
-1. **Framework Updates**: Now targets .NET 8.0 instead of .NET 7.0
-2. **Bug Fixes**: Fixed `Array.Copy` usage in generic array operations
-3. **Security**: Updated SHA256 usage from obsolete `SHA256Managed` to `SHA256.Create()`
-4. **Package Updates**: Updated all dependencies to latest stable versions
-5. **Full Compatibility**: No breaking API changes
+1. **Update Package References**: Change from `doob.Reflectensions.*` to `Cocoar.Reflectensions.*`
+   ```xml
+   <!-- Before -->
+   <PackageReference Include="doob.Reflectensions" Version="6.4.2" />
+   
+   <!-- After -->
+   <PackageReference Include="Cocoar.Reflectensions" Version="1.0.0" />
+   ```
+
+2. **Update Using Statements**: Change namespace imports
+   ```csharp
+   // Before
+   using doob.Reflectensions;
+   
+   // After
+   using Cocoar.Reflectensions;
+   ```
+
+3. **Update Type Name Strings**: If you have hardcoded type names
+   ```csharp
+   // Before
+   TypeHelper.FindType("doob.Reflectensions.Tests.MyClass")
+   
+   // After
+   TypeHelper.FindType("Cocoar.Reflectensions.Tests.MyClass")
+   ```
+
+**What's New in v1.0.0:**
+- ✅ Modernized to .NET 8.0
+- ✅ Fixed critical bugs (Buffer.BlockCopy, SHA256, Array.Reverse)
+- ✅ Updated all dependencies
+- ✅ Comprehensive documentation
+- ✅ CI/CD with GitHub Actions
+- ✅ All APIs remain compatible
 
 ## 🤝 Contributing
 
-Contributions are welcome! Whether it's:
-- 🐛 Bug reports
-- 💡 Feature requests
-- 📖 Documentation improvements
-- 🔧 Pull requests
+Contributions are welcome! We follow the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
 
-Please feel free to open an issue or PR on GitHub.
+Ways to contribute:
+- 🐛 Bug reports and fixes
+- 💡 Feature requests and implementations
+- 📖 Documentation improvements
+- 🔧 Code reviews and discussions
+
+Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting PRs.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Copyright 2025 COCOAR e.U.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this project except in compliance with the License.
+You may obtain a copy of the License at:
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+See the [LICENSE](LICENSE) file for the full license text.
+
+## 🔒 Security
+
+For information about security policies and reporting vulnerabilities, see our [Security Policy](SECURITY.md).
 
 ## 🙏 Acknowledgments
 
-Created and maintained by [Bernhard Windisch](https://github.com/doob-at).
+**Created and maintained by** [Bernhard Windisch](https://github.com/windischb) at [COCOAR e.U.](https://github.com/cocoar-dev)
+
+Based on the solid foundation of the original doob.Reflectensions library (v6.4.2).
 
 Special thanks to all contributors and users who have helped improve this library!
 
 ## 📞 Support & Links
 
-- **GitHub**: [https://github.com/doob-at/Reflectensions](https://github.com/doob-at/Reflectensions)
-- **Issues**: [Report a bug or request a feature](https://github.com/doob-at/Reflectensions/issues)
-- **NuGet**: [Browse packages](https://www.nuget.org/packages?q=doob.Reflectensions)
+- **GitHub**: [https://github.com/cocoar-dev/Cocoar.Reflectensions](https://github.com/cocoar-dev/Cocoar.Reflectensions)
+- **Issues**: [Report a bug or request a feature](https://github.com/cocoar-dev/Cocoar.Reflectensions/issues)
+- **NuGet**: [Browse packages](https://www.nuget.org/packages?q=Cocoar.Reflectensions)
+- **Documentation**: [Full documentation](https://github.com/cocoar-dev/Cocoar.Reflectensions/tree/develop/docs)
+
+---
+
+**Built with ❤️ by COCOAR e.U.**
 
 ---
 

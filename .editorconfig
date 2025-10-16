@@ -1,0 +1,129 @@
+# top-most EditorConfig file
+root = true
+
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+# C# code style
+[*.cs]
+dotnet_sort_system_directives_first = true
+csharp_style_namespace_declarations = file_scoped:suggestion
+csharp_prefer_primary_constructors = true:suggestion
+
+# var preferences - Performance-focused style
+# Use explicit types for built-in types (int, bool, etc.) for clarity
+csharp_style_var_for_built_in_types = false:suggestion
+# Use var when type is obvious from the right side
+csharp_style_var_when_type_is_apparent = true:suggestion
+# Use var for complex types (less verbose)
+csharp_style_var_elsewhere = true:silent
+
+csharp_new_line_before_open_brace = all
+csharp_new_line_between_query_expression_clauses = true
+
+# Code block preferences - Always use braces for safety
+csharp_prefer_braces = true:suggestion
+csharp_style_prefer_primary_constructors = true:suggestion
+
+csharp_style_expression_bodied_methods = when_possible:suggestion
+csharp_style_expression_bodied_properties = when_possible:suggestion
+csharp_style_expression_bodied_accessors = when_possible:suggestion
+
+csharp_style_prefer_switch_expression = true:suggestion
+csharp_style_implicit_object_creation_when_type_is_apparent = true:suggestion
+csharp_style_prefer_readonly_struct = true:suggestion
+csharp_style_prefer_static_local_function = true:suggestion
+csharp_prefer_simple_default_expression = true:suggestion
+
+# Dotnet code style
+[*.{cs,vb}]
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_event = false:suggestion
+
+dotnet_style_null_propagation = true:suggestion
+dotnet_style_coalesce_expression = true:suggestion
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
+
+# Naming conventions
+dotnet_naming_rule.private_fields_should_be_camel_case.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_camel_case.style = camel_case
+
+# symbol group
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+# style
+dotnet_naming_style.camel_case.capitalization = camel_case
+
+# ============================================================================
+# ReSharper Settings - Performance Oriented
+# ============================================================================
+
+# Code block preferences - Always require braces
+resharper_braces_for_ifelse = required
+resharper_braces_for_for = required
+resharper_braces_for_foreach = required
+resharper_braces_for_while = required
+resharper_braces_for_dowhile = required
+resharper_braces_for_using = required
+resharper_braces_for_lock = required
+resharper_braces_for_fixed = required
+resharper_braces_redundant = false
+
+# Disable readability-over-performance suggestions
+resharper_loop_can_be_converted_to_query_highlighting = none
+resharper_foreach_can_be_converted_to_query_using_another_get_enumerator_highlighting = none
+resharper_loop_can_be_partly_converted_to_query_highlighting = none
+resharper_foreach_can_be_partly_converted_to_query_using_another_get_enumerator_highlighting = none
+resharper_for_can_be_converted_to_foreach_highlighting = suggestion
+
+# Enable performance warnings
+resharper_possible_multiple_enumeration_highlighting = warning
+resharper_multiple_enumeration_highlighting = warning
+resharper_boxing_allocation_highlighting = warning
+resharper_loop_can_be_converted_to_linq_highlighting = none
+
+# Struct performance
+resharper_struct_can_be_made_readonly_highlighting = suggestion
+resharper_struct_member_can_be_made_read_only_highlighting = suggestion
+
+# Collection expressions - be careful with performance
+resharper_use_collection_expression_highlighting = suggestion
+
+# Allocation-related warnings
+resharper_closure_can_be_eliminated_highlighting = suggestion
+resharper_foreach_on_array_highlighting = suggestion
+
+# ============================================================================
+# Hot Path Files - Extra Strict Performance Rules  
+# ============================================================================
+
+[**/TypeHelper*.cs]
+resharper_for_can_be_converted_to_foreach_highlighting = none
+resharper_loop_can_be_converted_to_query_highlighting = none
+resharper_boxing_allocation_highlighting = warning
+
+[**/InvokeHelper*.cs]
+resharper_for_can_be_converted_to_foreach_highlighting = none
+resharper_loop_can_be_converted_to_query_highlighting = none
+resharper_boxing_allocation_highlighting = warning
+
+# ============================================================================
+# Test Files - More Relaxed for Readability
+# ============================================================================
+
+[**/*Tests.cs]
+resharper_for_can_be_converted_to_foreach_highlighting = suggestion
+resharper_loop_can_be_converted_to_query_highlighting = hint
+
+[**/Benchmarks/*.cs]
+resharper_for_can_be_converted_to_foreach_highlighting = none
+resharper_loop_can_be_converted_to_query_highlighting = none
+resharper_boxing_allocation_highlighting = error
