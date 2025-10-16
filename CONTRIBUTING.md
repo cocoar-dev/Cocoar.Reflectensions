@@ -14,7 +14,7 @@ Thanks for your interest in contributing to Cocoar.Reflectensions!
 - Follow existing code style and conventions.
 
 ## Testing
-- Run unit tests under `src/Reflectensions.Tests`.
+- Run unit tests under `src/Cocoar.Reflectensions.Tests`.
 - Ensure all 169 tests pass before submitting.
 - Add tests for new features and bug fixes.
 
