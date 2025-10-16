@@ -1,7 +1,31 @@
 mode: ContinuousDeployment
-next-version: 1.0.0
-continuous-delivery-fallback-tag: beta
-branches: {}
+
+branches:
+  develop:
+    regex: ^develop$
+    label: alpha
+    is-main-branch: true
+
+  release:
+    regex: ^release[/-]
+    label: rc
+
+  feature:
+    regex: ^(feature|bugfix)[/-]
+    label: useBranchName
+
+  hotfix:
+    regex: ^hotfix[/-]
+    label: hotfix
+
+  pull-request:
+    label: pr
+
+  other:
+    regex: .*
+    label: alpha
+
+tag-prefix: 'v'
+commit-message-incrementing: Enabled
 ignore:
   sha: []
-merge-message-formats: {}
