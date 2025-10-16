@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <AssemblyName>Cocoar.Reflectensions.Invoke</AssemblyName>
+    <RootNamespace>Cocoar.Reflectensions</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Bernhard Windisch</Authors>
+    <Company>Cocoar</Company>
+    <Description>Dynamic method invocation helpers with automatic parameter matching and type conversion.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/cocoar-dev/Reflectensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cocoar-dev/Reflectensions</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>Cocoar.Reflectensions.Invoke</PackageId>
+    <Product>Cocoar.Reflectensions.Invoke</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Reflectensions\Reflectensions.csproj" />
+  </ItemGroup>
+
+
+</Project>

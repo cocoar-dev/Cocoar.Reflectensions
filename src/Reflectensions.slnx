@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="Reflectensions.Common/Reflectensions.Common.csproj" />
+  <Project Path="Reflectensions.CommonExtensions/Reflectensions.CommonExtensions.csproj" />
+  <Project Path="Reflectensions.ExpandableObject/Reflectensions.ExpandableObject.csproj" />
+  <Project Path="Reflectensions.Invoke/Reflectensions.Invoke.csproj" />
+  <Project Path="Reflectensions.Json/Reflectensions.Json.csproj" />
+  <Project Path="Reflectensions.Tests/Reflectensions.Tests.csproj" />
+  <Project Path="Reflectensions/Reflectensions.csproj" />
+</Solution>

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <AssemblyName>Cocoar.Reflectensions.CommonExtensions</AssemblyName>
+    <RootNamespace>Cocoar.Reflectensions.Common</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Bernhard Windisch</Authors>
+    <Company>Cocoar</Company>
+    <Description>Common extension methods for strings, enums, arrays and more.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/cocoar-dev/Reflectensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cocoar-dev/Reflectensions</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>Cocoar.Reflectensions.CommonExtensions</PackageId>
+    <Product>Cocoar.Reflectensions.CommonExtensions</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Reflectensions\Reflectensions.csproj" />
+  </ItemGroup>
+
+</Project>

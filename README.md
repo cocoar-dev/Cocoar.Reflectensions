@@ -1,8 +1,152 @@
 # Reflectensions
 
-Reflectensions is a library to make it easier to work with C# Reflection and various Types.  
-Initially i have created this library to make ma life easier and speed up my daily coding...  
-Probably it's not a big player for everyone, but maybe it is helpful for one or the other.
+[![.NET 8.0](https://img.shields.io/badge/.NET-8.0-blue)](https://dotnet.microsoft.com/download)
+[![.NET Standard 2.0](https://img.shields.io/badge/.NET%20Standard-2.0-blue)](https://docs.microsoft.com/en-us/dotnet/standard/net-standard)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**Reflectensions** is a comprehensive .NET library that simplifies working with C# Reflection and Type operations. It provides powerful utilities for type parsing, reflection queries, type conversion, and dynamic invocation - making reflection code more readable, maintainable, and efficient.
+
+## 🎯 Why Reflectensions?
+
+- **🔍 Advanced Type Parsing**: Parse complex generic type names from strings (e.g., `Dictionary<string, List<int>>`)
+- **💡 Fluent API**: Chainable extension methods for querying types, methods, and properties
+- **🔄 Smart Type Conversion**: Intelligent object type conversion with fallback mechanisms
+- **⚡ Dynamic Invocation**: Simplified method invocation with automatic parameter matching
+- **🌐 Cross-Platform**: Supports .NET 8.0 and .NET Standard 2.0
+
+## 📦 Packages
+
+Reflectensions is split into focused packages:
+
+| Package | Description | Use When |
+|---------|-------------|----------|
+| **Reflectensions** | Core type helpers and reflection extensions | Working with types and reflection |
+| **Reflectensions.CommonExtensions** | String, enum, array extensions | Need common utility extensions |
+| **Reflectensions.Invoke** | Method invocation helpers | Dynamically calling methods |
+| **Reflectensions.Json** | JSON conversion utilities (Newtonsoft.Json) | Working with JSON serialization |
+| **Reflectensions.ExpandableObject** | Dynamic object support | Creating dynamic/expandable objects |
+
+## 🚀 Quick Start
+
+```bash
+# Core library (type helpers and reflection)
+dotnet add package doob.Reflectensions
+
+# Common extensions (string, enum, array helpers)
+dotnet add package doob.Reflectensions.CommonExtensions
+
+# Method invocation helpers
+dotnet add package doob.Reflectensions.Invoke
+
+# JSON utilities (Newtonsoft.Json)
+dotnet add package doob.Reflectensions.Json
+
+# Dynamic/expandable objects
+dotnet add package doob.Reflectensions.ExpandableObject
+```
+
+## ✨ Key Features
+
+## ✨ Key Features
+
+### 1. Advanced Type Resolution ⭐
+
+Parse complex type names from strings, including generics, arrays, and custom mappings:
+
+```csharp
+using doob.Reflectensions;
+
+// Parse complex generic types
+var type1 = TypeHelper.FindType("Dictionary<string, List<int>>");
+var type2 = TypeHelper.FindType("System.Collections.Generic.Dictionary`2[System.String, System.Int32]");
+
+// Custom type mapping (e.g., TypeScript → C#)
+var mapping = new Dictionary<string, string> 
+{ 
+    ["number"] = "double",
+    ["boolean"] = "bool"
+};
+var type3 = TypeHelper.FindType("Dictionary<string, number>", mapping);
+// Resolves to: Dictionary<string, double>
+```
+
+**Supported Formats:**
+- Normal type names: `System.String`, `System.DateTime`, `CustomNamespace.MyClass`
+- C# keywords: `string`, `double`, `dynamic`, `int`
+- Arrays: `int[]`, `int[][]`, `System.Object[][][]`
+- Generic types: `List<string>`, `Dictionary<string, int>`
+- Nested generics: `Dictionary<string, List<Dictionary<int, double>>>`
+- Mixed formats and custom mappings
+
+### 2. Fluent Reflection Extensions 🔗
+
+Make reflection code more readable with chainable LINQ-style queries:
+
+```csharp
+// Filter methods fluently
+var methods = typeof(MyClass).GetMethods()
+    .WithName("Calculate")
+    .WithReturnType<double>()
+    .WithParametersOfType(typeof(int), typeof(bool))
+    .WithAttribute<ObsoleteAttribute>();
+
+// Check type relationships
+if (type.IsGenericTypeOf<Dictionary<,>>()) { }
+if (type.InheritFromClass<BaseClass>()) { }
+if (type.ImplementsInterface<IMyInterface>()) { }
+if (type.IsImplicitCastableTo<string>()) { }
+```
+
+### 3. Smart Type Conversion 🔄
+
+Convert objects between types intelligently:
+
+```csharp
+// Simple conversions
+var dateString = "2021-03-21T15:50:17+00:00";
+DateTime date = dateString.Reflect().To<DateTime>();
+
+// With fallback
+object value = "not a number";
+int number = value.Reflect().To<int>(42); // Returns 42
+
+// Try pattern
+if (value.Reflect().TryTo<DateTime>(out var result))
+{
+    // Use result
+}
+```
+
+### 4. Dynamic Method Invocation ⚡
+
+Simplify method invocation with automatic parameter matching:
+
+```csharp
+// Invoke by name
+var result = instance.Invoke("MethodName", arg1, arg2);
+
+// Invoke with automatic type conversion
+var result = InvokeHelper.InvokeMethod(instance, "Calculate", "42", "true");
+// Automatically converts string args to int and bool
+```
+
+### 5. Property & Field Helpers 🎯
+
+Work with properties and fields easily:
+
+```csharp
+// Get property value by name
+var value = obj.Reflect().GetPropertyValue<string>("PropertyName");
+
+// Set property value
+obj.Reflect().SetPropertyValue("PropertyName", newValue);
+
+// Check property characteristics
+if (propertyInfo.IsIndexerProperty()) { }
+if (propertyInfo.IsPublic()) { }
+```
+
+## 📚 Detailed API Reference
 
 # Typehelper
 
@@ -219,3 +363,93 @@ var dtString = "2021-03-21T15:50:17+00:00";
 DateTime date = dtString.Reflect().To<DateTime>();
 
 ```
+
+## 🛠️ Real-World Use Cases
+
+### Plugin/Extensibility Systems
+```csharp
+// Load types from configuration
+var pluginType = TypeHelper.FindType(config.PluginTypeName);
+var instance = Activator.CreateInstance(pluginType);
+```
+
+### Dynamic Configuration
+```csharp
+// Type-driven configuration
+var processorType = TypeHelper.FindType(settings.ProcessorType);
+var processor = (IProcessor)Activator.CreateInstance(processorType);
+```
+
+### Code Generation
+```csharp
+// Parse TypeScript-style types to C#
+var mapping = new Dictionary<string, string>
+{
+    ["number"] = "double",
+    ["boolean"] = "bool",
+    ["any"] = "object"
+};
+var csharpType = TypeHelper.FindType(typeScriptType, mapping);
+```
+
+### Testing & Mocking
+```csharp
+// Find methods with specific attributes
+var testMethods = typeof(TestClass).GetMethods()
+    .WithAttribute<TestAttribute>()
+    .WithReturnType<Task>();
+```
+
+## 🏗️ Architecture
+
+Reflectensions is designed with modularity in mind:
+
+- **Core Library**: Type resolution, reflection extensions, base utilities
+- **Specialized Packages**: Domain-specific functionality (JSON, Invoke, AspNetCore)
+- **Zero Dependencies**: Core library has no external dependencies (except .NET itself)
+- **Multi-Targeting**: Supports modern .NET and legacy frameworks
+
+## 📋 Requirements
+
+- **.NET 8.0** or later (recommended)
+- **.NET Standard 2.0** compatible runtime (.NET Core 2.0+, .NET 5+, .NET Framework 4.6.1+)
+
+## 🔄 Migration from v6.x
+
+Version 7.0 brings modernization:
+
+1. **Framework Updates**: Now targets .NET 8.0 instead of .NET 7.0
+2. **Bug Fixes**: Fixed `Array.Copy` usage in generic array operations
+3. **Security**: Updated SHA256 usage from obsolete `SHA256Managed` to `SHA256.Create()`
+4. **Package Updates**: Updated all dependencies to latest stable versions
+5. **Full Compatibility**: No breaking API changes
+
+## 🤝 Contributing
+
+Contributions are welcome! Whether it's:
+- 🐛 Bug reports
+- 💡 Feature requests
+- 📖 Documentation improvements
+- 🔧 Pull requests
+
+Please feel free to open an issue or PR on GitHub.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+Created and maintained by [Bernhard Windisch](https://github.com/doob-at).
+
+Special thanks to all contributors and users who have helped improve this library!
+
+## 📞 Support & Links
+
+- **GitHub**: [https://github.com/doob-at/Reflectensions](https://github.com/doob-at/Reflectensions)
+- **Issues**: [Report a bug or request a feature](https://github.com/doob-at/Reflectensions/issues)
+- **NuGet**: [Browse packages](https://www.nuget.org/packages?q=doob.Reflectensions)
+
+---
+
+**Made with ❤️ for the .NET Community**

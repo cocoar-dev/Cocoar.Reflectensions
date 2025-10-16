@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <AssemblyName>Cocoar.Reflectensions.ExpandableObject</AssemblyName>
+    <RootNamespace>Cocoar.Reflectensions</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Bernhard Windisch</Authors>
+    <Company>Cocoar</Company>
+    <Description>Dynamic expandable objects with dictionary-like behavior for Reflectensions.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/cocoar-dev/Reflectensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cocoar-dev/Reflectensions</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>Cocoar.Reflectensions.ExpandableObject</PackageId>
+    <Product>Cocoar.Reflectensions.ExpandableObject</Product>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Reflectensions\Reflectensions.csproj" />
+  </ItemGroup>
+
+</Project>
