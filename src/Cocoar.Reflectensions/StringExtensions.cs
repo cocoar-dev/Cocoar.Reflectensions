@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Cocoar.Reflectensions.Common.Helper;
+using Cocoar.Reflectensions.Helper;
 using Cocoar.Reflectensions.Helper;
 
-namespace Cocoar.Reflectensions.Common {
+namespace Cocoar.Reflectensions {
     public static class StringExtensions {
 
         public static string[] Split(this string value, string split, StringSplitOptions options) {

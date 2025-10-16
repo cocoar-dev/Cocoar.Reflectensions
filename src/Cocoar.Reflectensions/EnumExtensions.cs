@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace Cocoar.Reflectensions.Common
+namespace Cocoar.Reflectensions
 {
     public static class EnumExtensions
     {

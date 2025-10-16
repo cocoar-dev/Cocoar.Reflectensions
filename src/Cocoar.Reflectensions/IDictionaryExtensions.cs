@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Cocoar.Reflectensions.ExtensionMethods;
 
-namespace Cocoar.Reflectensions.Common {
+namespace Cocoar.Reflectensions {
     public static class IDictionaryExtensions {
 
         public static T? GetValueAs<T>(this IDictionary<string, object> dictionary, string key, T? orDefault = default) {

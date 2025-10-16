@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
-using Cocoar.Reflectensions.Common;
+using Cocoar.Reflectensions;
 using Xunit;
 using Xunit.Abstractions;
 

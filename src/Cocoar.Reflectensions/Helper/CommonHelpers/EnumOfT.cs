@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Cocoar.Reflectensions.Common.Helper
+namespace Cocoar.Reflectensions.Helper
 {
         public class Enum<T> where T : struct, Enum, IConvertible
         {

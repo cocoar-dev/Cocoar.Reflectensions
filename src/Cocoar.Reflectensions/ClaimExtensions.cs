@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace Cocoar.Reflectensions.Common
+namespace Cocoar.Reflectensions
 {
     public static class ClaimExtensions
     {

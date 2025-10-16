@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
 
-namespace Cocoar.Reflectensions.Common.Helper {
+namespace Cocoar.Reflectensions.Helper {
 
 	public static class Base58Helper
 	{

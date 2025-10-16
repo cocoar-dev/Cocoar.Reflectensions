@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Cocoar.Reflectensions.Common.Helper
+namespace Cocoar.Reflectensions.Helper
 {
     public static class WildcardHelper
     {

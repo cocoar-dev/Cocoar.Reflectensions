@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Linq;
 
-namespace Cocoar.Reflectensions.Common.Helper
+namespace Cocoar.Reflectensions.Helper
 {
 	public class ArrayHelpers
 	{

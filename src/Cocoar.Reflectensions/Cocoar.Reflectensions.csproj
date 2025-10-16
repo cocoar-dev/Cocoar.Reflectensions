@@ -20,8 +20,4 @@
     <Product>Cocoar.Reflectensions</Product>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Cocoar.Reflectensions.Common\Cocoar.Reflectensions.Common.csproj" />
-  </ItemGroup>
-
 </Project>

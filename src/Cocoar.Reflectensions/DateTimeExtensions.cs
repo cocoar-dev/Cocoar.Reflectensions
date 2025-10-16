@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Cocoar.Reflectensions.Common
+namespace Cocoar.Reflectensions
 {
     public static class DateTimeExtensions
     {

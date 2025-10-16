@@ -1,7 +1,7 @@
-﻿using System.IO;
+using System.IO;
 using System.Reflection;
 
-namespace Cocoar.Reflectensions.Common
+namespace Cocoar.Reflectensions
 {
     public static class AssemblyExtensions
     {
