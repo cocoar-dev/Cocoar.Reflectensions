@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net8.0</TargetFrameworks>
@@ -31,9 +31,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Cocoar.Reflectensions.CommonExtensions\Cocoar.Reflectensions.CommonExtensions.csproj" />
     <ProjectReference Include="..\Cocoar.Reflectensions.ExpandableObject\Cocoar.Reflectensions.ExpandableObject.csproj" />
-    <ProjectReference Include="..\Cocoar.Reflectensions.Invoke\Cocoar.Reflectensions.Invoke.csproj" />
-    <ProjectReference Include="..\Cocoar.Reflectensions.Json\Cocoar.Reflectensions.Json.csproj" />
-    <ProjectReference Include="..\Cocoar.Reflectensions\Cocoar.Reflectensions.csproj" />
+    <ProjectReference Include="..\Cocoar.Reflectensions.Invoke\Cocoar.Reflectensions.Invoke.csproj" /><ProjectReference Include="..\Cocoar.Reflectensions\Cocoar.Reflectensions.csproj" />
   </ItemGroup>
 
 </Project>
+

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Cocoar.Reflectensions.Helper;
 using Cocoar.Reflectensions.Tests.TestClasses;
-using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -17,8 +16,6 @@ namespace Cocoar.Reflectensions.Tests.Invoketests {
         public InvokeAsyncTests(ITestOutputHelper output)
         {
             this._output = output;
-            JValue v = JValue.CreateNull();
-            var t = Json.Converter;
         }
 
         [Fact]

@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Cocoar.Reflectensions.Common.Classes;
 using Cocoar.Reflectensions.Exceptions;
 using Cocoar.Reflectensions.Helper;
 using Cocoar.Reflectensions.Internal;
@@ -180,19 +179,6 @@ namespace Cocoar.Reflectensions.ExtensionMethods
                     value
                 });
                 return true;
-            }
-
-            if (JsonHelpers.IsAvailable())
-            {
-                try
-                {
-                    outValue = JsonHelpers.Json()?.ToObject(value, type);
-                    return true;
-                }
-                catch
-                {
-                    // ignored
-                }
             }
 
             outValue = null;

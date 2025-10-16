@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Cocoar.Reflectensions.Common;
-using Newtonsoft.Json.Converters;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -37,14 +36,7 @@ namespace Cocoar.Reflectensions.Tests
 
         public void GetEnumNames(Enum value) {
 
-
             var names = value.GetName();
-
-            var json = new Json();
-            json.RegisterJsonConverter<StringEnumConverter>();
-
-            var js = json.ToJson(value);
-
 
             _output.WriteLine($"GetName() - '{names}'");
 

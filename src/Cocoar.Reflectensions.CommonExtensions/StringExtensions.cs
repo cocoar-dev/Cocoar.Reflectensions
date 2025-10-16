@@ -322,20 +322,10 @@ namespace Cocoar.Reflectensions.Common {
                 return dateTime;
             }
 
-            
-            if (JsonHelpers.IsAvailable()) {
-                try {
-                    string vstr = value!;
-                    if (!vstr.StartsWith("\"") && !vstr.EndsWith("\""))
-                        vstr = $"\"{value}\"";
-
-                    dateTime = JsonHelpers.Json()!.ToObject<DateTime>(vstr);
-                    return dateTime;
-                } catch {
-                    // ignored
-                }
+            // Try standard DateTime.Parse as last resort (handles ISO 8601 and other standard formats)
+            if (DateTime.TryParse(value, CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dateTime)) {
+                return dateTime;
             }
-
 
             return null;
         }

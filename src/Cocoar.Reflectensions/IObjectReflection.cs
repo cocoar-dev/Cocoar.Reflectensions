@@ -1,4 +1,4 @@
-﻿namespace Cocoar.Reflectensions.Common.Classes
+namespace Cocoar.Reflectensions
 {
     public interface IObjectReflection
     {

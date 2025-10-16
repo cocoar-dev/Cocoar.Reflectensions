@@ -1,5 +1,4 @@
-﻿using Cocoar.Reflectensions.Common.Classes;
-using Cocoar.Reflectensions.Internal;
+﻿using Cocoar.Reflectensions.Internal;
 
 namespace Cocoar.Reflectensions.ExtensionMethods
 {

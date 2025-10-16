@@ -1,9 +1,7 @@
 <Solution>
-  <Project Path="Cocoar.Reflectensions.Common/Cocoar.Reflectensions.Common.csproj" />
   <Project Path="Cocoar.Reflectensions.CommonExtensions/Cocoar.Reflectensions.CommonExtensions.csproj" />
   <Project Path="Cocoar.Reflectensions.ExpandableObject/Cocoar.Reflectensions.ExpandableObject.csproj" />
   <Project Path="Cocoar.Reflectensions.Invoke/Cocoar.Reflectensions.Invoke.csproj" />
-  <Project Path="Cocoar.Reflectensions.Json/Cocoar.Reflectensions.Json.csproj" />
   <Project Path="Cocoar.Reflectensions.Tests/Cocoar.Reflectensions.Tests.csproj" />
   <Project Path="Cocoar.Reflectensions/Cocoar.Reflectensions.csproj" />
 </Solution>

@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using Cocoar.Reflectensions.Helper;
 using Cocoar.Reflectensions.Tests.TestClasses;
-using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -15,8 +14,6 @@ namespace Cocoar.Reflectensions.Tests.Invoketests {
 
         public InvokeSyncTests(ITestOutputHelper output) {
             this._output = output;
-            JValue v = JValue.CreateNull();
-            var t = Json.Converter;
         }
 
         [Fact]

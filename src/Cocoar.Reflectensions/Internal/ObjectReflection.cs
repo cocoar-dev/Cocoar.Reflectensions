@@ -1,5 +1,4 @@
 ﻿using System;
-using Cocoar.Reflectensions.Common.Classes;
 
 namespace Cocoar.Reflectensions.Internal
 {
