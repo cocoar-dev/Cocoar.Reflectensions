@@ -153,7 +153,6 @@ namespace Cocoar.Reflectensions.ExtensionMethods
                 }
                 catch
                 {
-                    // ignored
                 }
             }
 
@@ -166,7 +165,6 @@ namespace Cocoar.Reflectensions.ExtensionMethods
                 }
                 catch
                 {
-                    // ignored
                 }
             }
 

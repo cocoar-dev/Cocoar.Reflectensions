@@ -8,7 +8,6 @@ namespace Cocoar.Reflectensions.Helper
     {
         public static IReadOnlyDictionary<string, string> TypeKeywordTable { get; } = new Dictionary<string, string>
         {
-            // Value Types
             ["bool"] = "System.Boolean",
             ["byte"] = "System.Byte",
             ["sbyte"] = "System.SByte",
@@ -22,8 +21,6 @@ namespace Cocoar.Reflectensions.Helper
             ["ulong"] = "System.UInt64",
             ["short"] = "System.Int16",
             ["ushort"] = "System.UInt16",
-
-            // Reference Types
             ["object"] = "System.Object",
             ["string"] = "System.String",
             ["dynamic"] = "System.Object"

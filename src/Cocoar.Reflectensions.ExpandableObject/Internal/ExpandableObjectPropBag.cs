@@ -18,8 +18,6 @@ namespace Cocoar.Reflectensions.Internal
                 .Where(p => p.DeclaringType != typeof(ExpandableBaseObject))
                 .ToArray();
 
-
-        // ReSharper disable once InconsistentNaming
         internal Dictionary<string, object?> __properties = new(StringComparer.OrdinalIgnoreCase);
 
         internal ExpandableObjectPropBag()

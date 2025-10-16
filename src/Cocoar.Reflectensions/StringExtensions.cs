@@ -149,27 +149,22 @@ namespace Cocoar.Reflectensions {
         }
 
         private static string DomainMapper(Match match) {
-            // IdnMapping class with default property values.
             var idn = new IdnMapping();
-
             string domainName = match.Groups[2].Value;
             domainName = idn.GetAscii(domainName);
             return match.Groups[1].Value + domainName;
         }
 
         public static Boolean IsValidEmailAddress(this string value) {
-            //Boolean invalid = false;
             if (String.IsNullOrEmpty(value))
                 return false;
 
-            // Use IdnMapping class to convert Unicode domain names. 
             try {
                 value = Regex.Replace(value, @"(@)(.+)$", DomainMapper);
             } catch {
                 return false;
             }
 
-            // Return true if strIn is in valid e-mail format. 
             try {
                 return Regex.IsMatch(value,
                         @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +

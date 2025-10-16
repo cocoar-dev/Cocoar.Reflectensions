@@ -27,8 +27,6 @@ namespace Cocoar.Reflectensions.Internal
                 .Where(p => p.DeclaringType != typeof(ExpandableBaseObject))
                 .ToArray();
 
-
-        // ReSharper disable once InconsistentNaming
         private Dictionary<string, object?> __properties = new(StringComparer.OrdinalIgnoreCase);
 
 
@@ -77,9 +75,7 @@ namespace Cocoar.Reflectensions.Internal
             }
             catch
             {
-                // ignored
             }
-
 
             result = null;
             return false;
@@ -97,7 +93,6 @@ namespace Cocoar.Reflectensions.Internal
             }
             catch
             {
-                // ignored
             }
 
             if (__properties.TryGetValue(binder.Name, out var oldValue))

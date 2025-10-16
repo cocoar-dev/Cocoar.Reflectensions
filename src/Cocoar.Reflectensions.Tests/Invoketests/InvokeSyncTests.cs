@@ -43,8 +43,6 @@ namespace Cocoar.Reflectensions.Tests.Invoketests {
             var method = building.GetType().GetMethod("OpenMainDoorAsync");
             InvokeHelper.InvokeVoidMethod(building, method, _delay);
             sw.Stop();
-
-            //Assert.True(sw.Elapsed.Ticks >= _delay.Ticks);
         }
 
         [Fact]
@@ -57,7 +55,6 @@ namespace Cocoar.Reflectensions.Tests.Invoketests {
             var floorCount = InvokeHelper.InvokeMethod<int>(building, method, _delay);
             sw.Stop();
 
-            //Assert.True(sw.Elapsed.Ticks >= _delay.Ticks);
             Assert.Equal(7, floorCount);
         }
 
@@ -71,7 +68,6 @@ namespace Cocoar.Reflectensions.Tests.Invoketests {
             var floorCount = InvokeHelper.InvokeMethod<decimal>(building, method, _delay);
             sw.Stop();
 
-            //Assert.True(sw.Elapsed.Ticks >= _delay.Ticks);
             Assert.Equal(7, floorCount);
         }
 
