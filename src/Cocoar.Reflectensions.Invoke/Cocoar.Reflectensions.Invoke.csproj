@@ -13,8 +13,8 @@
     <Company>Cocoar</Company>
     <Description>Dynamic method invocation helpers with automatic parameter matching and type conversion.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/cocoar-dev/Reflectensions</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/cocoar-dev/Reflectensions</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/cocoar-dev/Cocoar.Reflectensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cocoar-dev/Cocoar.Reflectensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageId>Cocoar.Reflectensions.Invoke</PackageId>
     <Product>Cocoar.Reflectensions.Invoke</Product>
