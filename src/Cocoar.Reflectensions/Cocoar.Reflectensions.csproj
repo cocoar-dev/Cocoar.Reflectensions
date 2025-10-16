@@ -4,20 +4,9 @@
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
     <AssemblyName>Cocoar.Reflectensions</AssemblyName>
     <RootNamespace>Cocoar.Reflectensions</RootNamespace>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <Authors>Bernhard Windisch</Authors>
-    <Company>Cocoar</Company>
-    <Description>Advanced reflection utilities for .NET - Type parsing, fluent reflection extensions, smart type conversion, and dynamic invocation.</Description>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/cocoar-dev/Cocoar.Reflectensions</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/cocoar-dev/Cocoar.Reflectensions</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
     <PackageId>Cocoar.Reflectensions</PackageId>
     <Product>Cocoar.Reflectensions</Product>
+    <PackageDescription>Advanced reflection utilities for .NET - Type parsing, fluent reflection extensions, smart type conversion, and dynamic invocation.</PackageDescription>
   </PropertyGroup>
 
 </Project>

@@ -1,0 +1,69 @@
+<Project>
+
+  <!-- ===== GLOBAL BUILD SETTINGS ===== -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn> <!-- Missing XML comments -->
+  </PropertyGroup>
+
+  <!-- ===== CI/CD BUILD OPTIMIZATIONS ===== -->
+  <PropertyGroup>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
+    <DebugType>portable</DebugType>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <!-- ===== PACKAGE METADATA ===== -->
+  <PropertyGroup>
+    <Authors>Bernhard Windisch</Authors>
+    <Company>COCOAR e.U.</Company>
+    <Copyright>Copyright © COCOAR $([System.DateTime]::Now.Year)</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/cocoar-dev/Cocoar.Reflectensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cocoar-dev/Cocoar.Reflectensions</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>reflection;dotnet;csharp;type-conversion;dynamic-invocation;fluent-api;type-parsing;utilities;cocoar</PackageTags>
+    <PackageReleaseNotes>Full release notes: https://github.com/cocoar-dev/Cocoar.Reflectensions/blob/develop/CHANGELOG.md</PackageReleaseNotes>
+  </PropertyGroup>
+
+
+
+  <!-- ===== SOURCE LINK (for debugging) ===== -->
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <!-- ===== ANALYZERS ===== -->
+  <PropertyGroup>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <!-- ===== PACKAGE REFERENCES (Global) ===== -->
+  <ItemGroup Condition="'$(IsPackable)' == 'true'">
+    <None Include="$(MSBuildThisFileDirectory)..\README.md" Pack="true" PackagePath="README.md" />
+    <None Include="$(MSBuildThisFileDirectory)..\LICENSE" Pack="true" PackagePath="LICENSE" />
+    <None Include="$(MSBuildThisFileDirectory)..\CHANGELOG.md" Pack="true" PackagePath="CHANGELOG.md" />
+  </ItemGroup>
+
+  <!-- ===== TOOLING PACKAGES (SourceLink) ===== -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <!-- ===== PERFORMANCE OPTIMIZATIONS ===== -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <Optimize>true</Optimize>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+</Project>
