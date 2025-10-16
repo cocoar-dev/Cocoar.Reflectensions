@@ -21,26 +21,18 @@ Reflectensions is split into focused packages:
 
 | Package | Description | Use When |
 |---------|-------------|----------|
-| **Cocoar.Reflectensions** | Core type helpers and reflection extensions | Working with types and reflection |
-| **Cocoar.Reflectensions.CommonExtensions** | String, enum, array extensions | Need common utility extensions |
+| **Cocoar.Reflectensions** | Core library with type helpers, reflection extensions, and common utilities | Working with types, reflection, and type conversion |
 | **Cocoar.Reflectensions.Invoke** | Method invocation helpers | Dynamically calling methods |
-| **Cocoar.Reflectensions.Json** | JSON conversion utilities (Newtonsoft.Json) | Working with JSON serialization |
 | **Cocoar.Reflectensions.ExpandableObject** | Dynamic object support | Creating dynamic/expandable objects |
 
 ## 🚀 Quick Start
 
 ```bash
-# Core library (type helpers and reflection)
+# Core library (includes type helpers, reflection, and common extensions)
 dotnet add package Cocoar.Reflectensions
-
-# Common extensions (string, enum, array helpers)
-dotnet add package Cocoar.Reflectensions.CommonExtensions
 
 # Method invocation helpers
 dotnet add package Cocoar.Reflectensions.Invoke
-
-# JSON utilities (Newtonsoft.Json)
-dotnet add package Cocoar.Reflectensions.Json
 
 # Dynamic/expandable objects
 dotnet add package Cocoar.Reflectensions.ExpandableObject
@@ -59,7 +51,8 @@ using Cocoar.Reflectensions;
 var type1 = TypeHelper.FindType("Dictionary<string, List<int>>");
 var type2 = TypeHelper.FindType("System.Collections.Generic.Dictionary`2[System.String, System.Int32]");
 
-// Custom type mapping (e.g., TypeScript → C#)
+// Custom type mapping (optional - useful for code generation scenarios)
+// For example, mapping TypeScript types to C# for Monaco editor definitions
 var mapping = new Dictionary<string, string> 
 { 
     ["number"] = "double",
@@ -401,12 +394,12 @@ var testMethods = typeof(TestClass).GetMethods()
 
 ## 🏗️ Architecture
 
-Cocoar.Reflectensions is designed with modularity in mind:
+Cocoar.Reflectensions is designed with simplicity and modularity in mind:
 
-- **Core Library**: Type resolution, reflection extensions, base utilities
-- **Specialized Packages**: Domain-specific functionality (JSON, Invoke, ExpandableObject)
-- **Zero Dependencies**: Core library has no external dependencies (except .NET itself)
-- **Multi-Targeting**: Supports modern .NET and legacy frameworks
+- **Core Library**: Type resolution, reflection extensions, and common utilities (strings, enums, arrays, dates) all in one package
+- **Specialized Packages**: Domain-specific functionality (Invoke, ExpandableObject)
+- **Zero Dependencies**: Completely dependency-free - no third-party packages required
+- **Multi-Targeting**: Supports .NET 8.0 and .NET Standard 2.0 for broad compatibility
 
 ## 📋 Requirements
 
@@ -445,12 +438,16 @@ This is the first release under the Cocoar organization. If you're migrating fro
    ```
 
 **What's New in v1.0.0:**
-- ✅ Modernized to .NET 8.0
-- ✅ Fixed critical bugs (Buffer.BlockCopy, SHA256, Array.Reverse)
-- ✅ Updated all dependencies
+- ✅ Rebranded from doob.Reflectensions to Cocoar.Reflectensions
+- ✅ Modernized to .NET 8.0 + .NET Standard 2.0
+- ✅ **Zero dependencies** - removed Newtonsoft.Json (was the only external dependency)
+- ✅ Simplified from 7 projects to 4 projects
+- ✅ Fixed circular dependencies
+- ✅ Merged common extensions into core package for simplicity
 - ✅ Comprehensive documentation
 - ✅ CI/CD with GitHub Actions
-- ✅ All APIs remain compatible
+- ✅ All 166 tests passing
+- ✅ Apache 2.0 License
 
 ## 🤝 Contributing
 

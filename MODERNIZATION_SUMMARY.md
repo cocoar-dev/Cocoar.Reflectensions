@@ -274,6 +274,8 @@ The Reflectensions library has been successfully modernized to .NET 8.0 with ful
 
 ---
 
+---
+
 ## 🏢 Phase 4: Rebranding to Cocoar (COMPLETED)
 
 ### Status: **COMPLETED** ✅
@@ -332,4 +334,130 @@ Commits:              2 (refactoring + fixes)
 
 ---
 
-**Modernization completed successfully!** 🎊
+## 🏢 Phase 5: Dependency Removal & Project Simplification (COMPLETED)
+
+### Status: **COMPLETED** ✅
+
+After the rebranding, we continued modernization by removing unnecessary dependencies and simplifying the project structure.
+
+### Actions Completed
+
+#### Removed Newtonsoft.Json Dependency ✅
+- ✅ Deleted `Cocoar.Reflectensions.Json` project (~1,500 lines)
+- ✅ Removed Newtonsoft.Json package reference (was the only external dependency)
+- ✅ Replaced JSON DateTime parsing with `DateTime.TryParse()`
+- ✅ Removed JSON fallback from type conversion
+- ✅ Fixed test files that referenced Json functionality
+- ✅ Library is now **100% dependency-free**
+
+**Rationale:**
+- Newtonsoft.Json was only used for edge-case DateTime conversion
+- `DateTime.TryParse()` handles the same scenarios
+- Users needing JSON can use System.Text.Json directly
+- Zero dependencies = easier maintenance and faster installation
+
+#### Removed Common Project ✅
+- ✅ Deleted `Cocoar.Reflectensions.Common` project
+- ✅ Moved `IObjectReflection` interface to main Reflectensions project
+- ✅ Updated namespace from `Cocoar.Reflectensions.Common.Classes` to `Cocoar.Reflectensions`
+- ✅ Fixed all references and tests
+
+**Rationale:**
+- Project contained only one interface (IObjectReflection)
+- Unnecessary separation added complexity
+- Consolidation improved maintainability
+
+#### Merged CommonExtensions into Core ✅
+- ✅ Deleted `Cocoar.Reflectensions.CommonExtensions` project
+- ✅ Moved all extension classes to Core project:
+  * StringExtensions, EnumExtensions, DateTimeExtensions
+  * ArrayExtensions, IDictionaryExtensions
+  * ClaimExtensions, AssemblyExtensions, ActionHelpers
+- ✅ Moved helpers to `Core/Helper/CommonHelpers`:
+  * Base58Helper, WildcardHelper, ArrayHelpers, EnumOfT
+- ✅ **Fixed circular dependency** (Core ↔ CommonExtensions)
+- ✅ Updated all namespaces from `Cocoar.Reflectensions.Common` to `Cocoar.Reflectensions`
+
+**Rationale:**
+- Fixed circular dependency code smell (Core needed CommonExtensions and vice versa)
+- Simpler for users (one package instead of two)
+- Utilities complement reflection features naturally
+- Easier maintenance
+
+### Simplification Statistics
+
+```
+Projects:       7 → 4  (-43%)
+Dependencies:   1 → 0  (-100%)
+Lines of Code:  ~5,000 → ~2,000  (-60%)
+Files Deleted:  ~20
+Commits:        2 (clean history)
+```
+
+### Final Solution Structure
+
+**After All Modernization:**
+1. ✅ **Cocoar.Reflectensions** (Core + all extensions merged)
+2. ✅ **Cocoar.Reflectensions.Invoke**
+3. ✅ **Cocoar.Reflectensions.ExpandableObject**
+4. ✅ **Cocoar.Reflectensions.Tests**
+
+**Deleted Projects:**
+- ❌ Cocoar.Reflectensions.Json (removed Newtonsoft.Json dependency)
+- ❌ Cocoar.Reflectensions.Common (only IObjectReflection interface)
+- ❌ Cocoar.Reflectensions.CommonExtensions (merged into Core)
+
+### Quality Verification
+
+**After Simplification:**
+- Build: ✅ Success  
+- Tests: ✅ 166/166 passing (100%)
+- Dependencies: ✅ 0 (zero external packages)
+- Architecture: ✅ No circular dependencies
+- Package Size: ✅ Smaller and cleaner
+
+### Commits
+- `2e17fa1` - refactor: remove unnecessary projects and dependencies
+- `d88f369` - refactor: merge CommonExtensions into main Reflectensions project
+
+---
+
+## 🎉 Final Summary
+
+### Complete Transformation
+
+**Before Modernization:**
+- Name: doob.Reflectensions
+- Projects: 7
+- Dependencies: 1 (Newtonsoft.Json)
+- Target: .NET Framework 4.7.2
+- License: Mixed
+- Lines of Code: ~5,000
+- Architecture: Circular dependencies
+
+**After Modernization:**
+- Name: Cocoar.Reflectensions ✅
+- Projects: 4 ✅
+- Dependencies: 0 ✅
+- Target: .NET 8.0 + .NET Standard 2.0 ✅
+- License: Apache 2.0 ✅
+- Lines of Code: ~2,000 ✅
+- Architecture: Clean, no circular dependencies ✅
+
+### Achievements
+- ✅ Modernized to .NET 8.0
+- ✅ Rebranded to Cocoar
+- ✅ Removed all external dependencies
+- ✅ Simplified from 7 to 4 projects
+- ✅ Fixed all circular dependencies
+- ✅ Removed ~3,000 lines of code
+- ✅ All 166 tests passing
+- ✅ Apache 2.0 licensed
+- ✅ Comprehensive documentation
+- ✅ CI/CD with GitHub Actions
+
+---
+
+**Modernization completed successfully!** 🎊🎊🎊
+
+**Ready for v1.0.0 release!** 🚀

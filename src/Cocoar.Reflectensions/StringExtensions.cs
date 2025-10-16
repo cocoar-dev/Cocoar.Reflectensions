@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Cocoar.Reflectensions.Helper;
-using Cocoar.Reflectensions.Helper;
 
 namespace Cocoar.Reflectensions {
     public static class StringExtensions {
