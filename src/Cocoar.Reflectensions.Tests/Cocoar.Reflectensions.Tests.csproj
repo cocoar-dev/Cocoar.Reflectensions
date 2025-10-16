@@ -29,11 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Reflectensions.CommonExtensions\Reflectensions.CommonExtensions.csproj" />
-    <ProjectReference Include="..\Reflectensions.ExpandableObject\Reflectensions.ExpandableObject.csproj" />
-    <ProjectReference Include="..\Reflectensions.Invoke\Reflectensions.Invoke.csproj" />
-    <ProjectReference Include="..\Reflectensions.Json\Reflectensions.Json.csproj" />
-    <ProjectReference Include="..\Reflectensions\Reflectensions.csproj" />
+    <ProjectReference Include="..\Cocoar.Reflectensions.CommonExtensions\Cocoar.Reflectensions.CommonExtensions.csproj" />
+    <ProjectReference Include="..\Cocoar.Reflectensions.ExpandableObject\Cocoar.Reflectensions.ExpandableObject.csproj" />
+    <ProjectReference Include="..\Cocoar.Reflectensions.Invoke\Cocoar.Reflectensions.Invoke.csproj" />
+    <ProjectReference Include="..\Cocoar.Reflectensions.Json\Cocoar.Reflectensions.Json.csproj" />
+    <ProjectReference Include="..\Cocoar.Reflectensions\Cocoar.Reflectensions.csproj" />
   </ItemGroup>
 
 </Project>

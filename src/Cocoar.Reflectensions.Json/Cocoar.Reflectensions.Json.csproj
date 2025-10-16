@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
-    <AssemblyName>Cocoar.Reflectensions</AssemblyName>
+    <AssemblyName>Cocoar.Reflectensions.Json</AssemblyName>
     <RootNamespace>Cocoar.Reflectensions</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
@@ -11,17 +11,21 @@
   <PropertyGroup>
     <Authors>Bernhard Windisch</Authors>
     <Company>Cocoar</Company>
-    <Description>Advanced reflection utilities for .NET - Type parsing, fluent reflection extensions, smart type conversion, and dynamic invocation.</Description>
+    <Description>JSON conversion utilities using Newtonsoft.Json for Reflectensions.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/cocoar-dev/Reflectensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/cocoar-dev/Reflectensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageId>Cocoar.Reflectensions</PackageId>
-    <Product>Cocoar.Reflectensions</Product>
+    <PackageId>Cocoar.Reflectensions.Json</PackageId>
+    <Product>Cocoar.Reflectensions.Json</Product>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Reflectensions.Common\Reflectensions.Common.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cocoar.Reflectensions.Common\Cocoar.Reflectensions.Common.csproj" />
   </ItemGroup>
 
 </Project>
