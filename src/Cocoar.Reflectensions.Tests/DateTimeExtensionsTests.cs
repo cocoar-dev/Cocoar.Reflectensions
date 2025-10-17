@@ -18,11 +18,18 @@ namespace Cocoar.Reflectensions.Tests
         [Fact]
         public void ToUnixTimeMilliseconds_LocalDateTime_ReturnsCorrectValue()
         {
-            var dateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
+            // Use a date that won't be epoch in any reasonable timezone
+            var dateTime = new DateTime(2020, 1, 1, 12, 0, 0, DateTimeKind.Local);
 
             var result = dateTime.ToUnixTimeMilliseconds();
 
-            Assert.True(result != 0); // Will vary based on timezone
+            // Should be a reasonable timestamp (non-zero, positive)
+            Assert.True(result > 0);
+            
+            // Verify conversion to UTC and back gives consistent result
+            var utcEquivalent = dateTime.ToUniversalTime();
+            var expectedResult = utcEquivalent.ToUnixTimeMilliseconds();
+            Assert.Equal(expectedResult, result);
         }
 
         [Fact]
