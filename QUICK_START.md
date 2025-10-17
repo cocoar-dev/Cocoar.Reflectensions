@@ -5,17 +5,11 @@ Get up and running with Cocoar.Reflectensions in minutes!
 ## 🚀 Installation
 
 ```bash
-# Core library (type helpers and reflection)
+# Core library (includes type helpers, reflection, and common utilities)
 dotnet add package Cocoar.Reflectensions
-
-# Common extensions (string, enum, array helpers)
-dotnet add package Cocoar.Reflectensions.CommonExtensions
 
 # Method invocation helpers
 dotnet add package Cocoar.Reflectensions.Invoke
-
-# JSON utilities (Newtonsoft.Json)
-dotnet add package Cocoar.Reflectensions.Json
 
 # Dynamic/expandable objects
 dotnet add package Cocoar.Reflectensions.ExpandableObject
@@ -59,7 +53,7 @@ var implements = type.ImplementsInterface<IDisposable>();
 ### 3. Smart Object Conversion
 
 ```csharp
-using doob.Reflectensions;
+using Cocoar.Reflectensions;
 
 // Convert objects intelligently
 string dateStr = "2021-03-21T15:50:17+00:00";
@@ -79,7 +73,8 @@ if (value.Reflect().TryTo<DateTime>(out var result))
 ### 4. Dynamic Method Invocation
 
 ```csharp
-using doob.Reflectensions;
+using Cocoar.Reflectensions;
+using Cocoar.Reflectensions.Helper;
 
 // Invoke methods by name
 var calculator = new Calculator();
@@ -94,7 +89,8 @@ var result2 = InvokeHelper.InvokeMethod(calculator, "Add", "10", "20");
 ### 5. Property Access
 
 ```csharp
-using doob.Reflectensions;
+using Cocoar.Reflectensions;
+using Cocoar.Reflectensions.ExtensionMethods;
 
 var person = new Person { Name = "John", Age = 30 };
 
@@ -193,9 +189,9 @@ public class DataConverter
 ## 📚 Next Steps
 
 - 📖 Read the full [README](README.md) for complete API reference
-- 🔍 Explore [REFLECTENSIONS_VALUE_ANALYSIS.md](REFLECTENSIONS_VALUE_ANALYSIS.md) to understand the library's design
 - 📝 Check [CHANGELOG.md](CHANGELOG.md) for version history
-- 🐛 Report issues on [GitHub](https://github.com/doob-at/Reflectensions/issues)
+- 🤝 Read [CONTRIBUTING.md](CONTRIBUTING.md) to contribute
+- 🐛 Report issues on [GitHub](https://github.com/cocoar-dev/Cocoar.Reflectensions/issues)
 
 ## 💡 Tips & Tricks
 

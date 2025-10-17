@@ -446,7 +446,7 @@ This is the first release under the Cocoar organization. If you're migrating fro
 - ✅ Merged common extensions into core package for simplicity
 - ✅ Comprehensive documentation
 - ✅ CI/CD with GitHub Actions
-- ✅ All 166 tests passing
+- ✅ All 529 tests passing (379 test methods)
 - ✅ Apache 2.0 License
 
 ## 🧪 Development

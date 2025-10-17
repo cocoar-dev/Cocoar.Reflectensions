@@ -366,3 +366,6 @@ MigrationBackup/
 FodyWeavers.xsd
 # Editor backup files
 *.bak
+
+# Local working files (not committed)
+.local/
