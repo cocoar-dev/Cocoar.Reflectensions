@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Cocoar.Reflectensions.Helper;
 using Cocoar.Reflectensions.Tests.TestClasses;
@@ -19,84 +18,66 @@ namespace Cocoar.Reflectensions.Tests.Invoketests {
         }
 
         [Fact]
-        public async Task InvokeAsync_int() {
+        public async Task InvokeMethodAsync_ReturnsInt_WhenMethodReturnsInt() {
             var building = new Building(7);
-
             var method = building.GetType().GetMethod("CountFloors");
-
-            var count = await InvokeHelper.InvokeMethodAsync<int>(building, method);
+            var count = await InvokeHelper.InvokeMethodAsync<int>(building, method!);
             
             Assert.Equal(7, count);
         }
 
         [Fact]
-        public async Task InvokeAsync_int_TO_long() {
+        public async Task InvokeMethodAsync_ConvertsIntToLong_WhenRequestedTypeDiffers() {
             var building = new Building(7);
             var method = building.GetType().GetMethod("CountFloors");
-            var count = await InvokeHelper.InvokeMethodAsync<long>(building, method);
+            var count = await InvokeHelper.InvokeMethodAsync<long>(building, method!);
+            
             Assert.Equal(7, count);
         }
 
         [Fact]
-        public async Task InvokeAsync_Task() {
-
+        public async Task InvokeVoidMethodAsync_ExecutesTaskMethod_Successfully() {
             var building = new Building(7);
-            var sw = new Stopwatch();
-            sw.Start();
             var method = building.GetType().GetMethod("OpenMainDoorAsync");
-            await InvokeHelper.InvokeVoidMethodAsync(building, method, _delay);
-            sw.Stop();
+            
+            await InvokeHelper.InvokeVoidMethodAsync(building, method!, _delay);
         }
 
         [Fact]
-        public async Task InvokeAsync_Task_OF_int() {
-
+        public async Task InvokeMethodAsync_ReturnsInt_WhenMethodReturnsTaskOfInt() {
             var building = new Building(7);
-            var sw = new Stopwatch();
-            sw.Start();
             var method = building.GetType().GetMethod("CountFloorsAsync");
-            var floorCount = await InvokeHelper.InvokeMethodAsync<int>(building, method, _delay);
-            sw.Stop();
+            var floorCount = await InvokeHelper.InvokeMethodAsync<int>(building, method!, _delay);
 
             Assert.Equal(7, floorCount);
         }
 
         [Fact]
-        public async Task InvokeAsync_Task_OF_int_TO_decimal() {
-
+        public async Task InvokeMethodAsync_ConvertsIntToDecimal_WhenMethodReturnsTaskOfInt() {
             var building = new Building(7);
-            var sw = new Stopwatch();
-            sw.Start();
             var method = building.GetType().GetMethod("CountFloorsAsync");
-            var floorCount = await InvokeHelper.InvokeMethodAsync<decimal>(building, method, _delay);
-            sw.Stop();
+            var floorCount = await InvokeHelper.InvokeMethodAsync<decimal>(building, method!, _delay);
 
             Assert.Equal(7, floorCount);
         }
 
         [Fact]
-        public async Task InvokeAsync_Task_OF_int_TO_decimal_null() {
-
+        public async Task InvokeMethodAsync_ConvertsIntToDecimal_WithNullParameter() {
             var building = new Building(7);
-            var sw = new Stopwatch();
-            sw.Start();
             var method = building.GetType().GetMethod("CountFloorsAsync1");
-            var floorCount = await InvokeHelper.InvokeMethodAsync<decimal>(building, method, _delay, null);
-            sw.Stop();
+            var floorCount = await InvokeHelper.InvokeMethodAsync<decimal>(building, method!, _delay, null!);
 
-            //Assert.True(sw.Elapsed.Ticks >= _delay.Ticks);
             Assert.Equal(7, floorCount);
         }
 
 
         [Fact]
-        public async Task InvokeAsyncObject()
+        public async Task InvokeAsyncMethod_ExecutesSuccessfully()
         {
-
             var testObj = new InvokeAsyncTestClass();
-
-            var t = await testObj.GetNameAsync();
-
+            var name = await testObj.GetNameAsync();
+            
+            Assert.Null(name);
         }
 
     }

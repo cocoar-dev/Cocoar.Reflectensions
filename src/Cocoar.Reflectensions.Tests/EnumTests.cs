@@ -33,25 +33,101 @@ namespace Cocoar.Reflectensions.Tests
         [InlineData(Simplest.Third)]
         [InlineData(Simplest.First | Simplest.Second | Simplest.Zero)]
         [InlineData(Simplest.Second | Simplest.First | Simplest.Third)]
-
-        public void GetEnumNames(Enum value) {
-
+        public void GetEnumName_ReturnsCorrectNameAndCanBeParsedBack(Enum value) {
             var names = value.GetName();
-
             _output.WriteLine($"GetName() - '{names}'");
 
-            EnumExtensions.TryFind(value.GetType(), names, out var ens);
-            _output.WriteLine($"Parsed - {((Enum)ens).ToString("F")}");
+            var success = EnumExtensions.TryFind(value.GetType(), names, out var parsedValue);
+            _output.WriteLine($"Parsed - {(parsedValue as Enum)?.ToString("F") ?? "null"}");
+            
+            Assert.True(success);
+            Assert.Equal(value, parsedValue);
         }
 
         [Fact]
-        public void ParseEnumNames() {
+        public void TryFindEnum_ReturnsFalse_ForEmptyString() {
+            var emptyString = "";
+            
+            var success = EnumExtensions.TryFind(typeof(Simplest), emptyString, out var result);
+            
+            _output.WriteLine($"TryFind - {success}, {(result as Enum)?.ToString("F") ?? "null"}");
+            Assert.False(success);
+        }
 
-            var find = "";
+        [Fact]
+        public void TryFindEnum_WithEnumMemberAttribute_FindsCorrectValue() {
+            var success = EnumExtensions.TryFind(typeof(ResponseFormat), "application/json", out var result);
+            
+            Assert.True(success);
+            Assert.Equal(ResponseFormat.Json, result);
+        }
 
-           
-            var tryf = EnumExtensions.TryFind(typeof(Simplest), find, out var ens);
-            _output.WriteLine($"TryFind - {tryf}, {((Enum)ens)?.ToString("F")}");
+        [Fact]
+        public void TryFindEnum_WithDescriptionAttribute_FindsCorrectValue() {
+            var success = EnumExtensions.TryFind(typeof(WithFlags), "__Two__", out var result);
+            
+            Assert.True(success);
+            Assert.Equal(WithFlags.Two, result);
+        }
+
+        [Fact]
+        public void TryFindEnum_WithEnumMemberTakesPrecedence_OverDescription() {
+            var success = EnumExtensions.TryFind(typeof(WithFlags), "_Four", out var result);
+            
+            Assert.True(success);
+            Assert.Equal(WithFlags.Three, result);
+        }
+
+        [Fact]
+        public void TryFindEnum_CaseInsensitive_FindsValue() {
+            var success = EnumExtensions.TryFind(typeof(Simplest), "first", true, out var result);
+            
+            Assert.True(success);
+            Assert.Equal(Simplest.First, result);
+        }
+
+        [Fact]
+        public void TryFindEnum_WithCommaSeparated_FindsMultipleValues() {
+            var success = EnumExtensions.TryFind(typeof(WithFlags), "One, Two", out var result);
+            
+            Assert.True(success);
+            Assert.Equal(WithFlags.One | WithFlags.Two, result);
+        }
+
+        [Fact]
+        public void TryFindEnum_InvalidValue_ReturnsFalse() {
+            var success = EnumExtensions.TryFind(typeof(Simplest), "InvalidValue", out var result);
+            
+            Assert.False(success);
+        }
+
+        [Fact]
+        public void GetName_WithEnumMemberAttribute_ReturnsAttributeValue() {
+            var name = ResponseFormat.Json.GetName();
+            
+            Assert.Equal("application/json", name);
+        }
+
+        [Fact]
+        public void GetName_WithDescriptionAttribute_ReturnsDescription() {
+            var name = WithFlags.Two.GetName();
+            
+            Assert.Equal("__Two__", name);
+        }
+
+        [Fact]
+        public void GetName_WithEnumMemberTakesPrecedence_ReturnsEnumMemberValue() {
+            var name = WithFlags.Three.GetName();
+            
+            Assert.Equal("_Four", name);
+        }
+
+        [Fact]
+        public void GetName_WithMultipleFlags_ReturnsCommaSeparatedNames() {
+            var name = (WithFlags.One | WithFlags.Two).GetName();
+            
+            Assert.Contains("One", name);
+            Assert.Contains("__Two__", name);
         }
     }
 

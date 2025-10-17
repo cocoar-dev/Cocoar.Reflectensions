@@ -5,7 +5,7 @@ namespace Cocoar.Reflectensions.Tests.TestClasses
     public class Transformer : ITransformer  {
 
         public string Name { get; internal set; }
-        public string NickName { get; private set; }
+        public string NickName { get; private set; } = string.Empty;
 
         protected int _transformCount = 0;
 
@@ -25,7 +25,7 @@ namespace Cocoar.Reflectensions.Tests.TestClasses
         public Transformer TransformTo(CamouflageMode type) {
 
             var genType = typeof(Transformer<>).MakeGenericType(type.GetType());
-            var t = (Transformer) Activator.CreateInstance(genType, new object[] {Name});
+            var t = (Transformer) Activator.CreateInstance(genType, new object[] {Name})!;
             t._transformCount = _transformCount + 1;
             return t;
         }
@@ -45,7 +45,7 @@ namespace Cocoar.Reflectensions.Tests.TestClasses
 
     public class Transformer<T> : Transformer where T : CamouflageMode {
 
-        public T CamouflageMode { get; }
+        public T CamouflageMode { get; } = default!;
 
         public Transformer(string name) : base(name)
         {

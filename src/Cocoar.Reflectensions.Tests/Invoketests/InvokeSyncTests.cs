@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using Cocoar.Reflectensions.Helper;
 using Cocoar.Reflectensions.Tests.TestClasses;
 using Xunit;
@@ -17,56 +16,45 @@ namespace Cocoar.Reflectensions.Tests.Invoketests {
         }
 
         [Fact]
-        public void InvokeSync_int() {
+        public void InvokeMethod_ReturnsInt_WhenMethodReturnsInt() {
             var building = new Building(7);
             var method = building.GetType().GetMethod("CountFloors");
-
-            var count = InvokeHelper.InvokeMethod<int>(building, method);
+            var count = InvokeHelper.InvokeMethod<int>(building, method!);
 
             Assert.Equal(7, count);
         }
 
         [Fact]
-        public void InvokeSync_int_TO_long() {
+        public void InvokeMethod_ConvertsIntToLong_WhenRequestedTypeDiffers() {
             var building = new Building(7);
             var method = building.GetType().GetMethod("CountFloors");
-            var count = InvokeHelper.InvokeMethod<long>(building, method);
+            var count = InvokeHelper.InvokeMethod<long>(building, method!);
+            
             Assert.Equal(7, count);
         }
 
         [Fact]
-        public void InvokeSync_Task() {
-
+        public void InvokeVoidMethod_ExecutesTaskMethod_Successfully() {
             var building = new Building(7);
-            var sw = new Stopwatch();
-            sw.Start();
             var method = building.GetType().GetMethod("OpenMainDoorAsync");
-            InvokeHelper.InvokeVoidMethod(building, method, _delay);
-            sw.Stop();
+            
+            InvokeHelper.InvokeVoidMethod(building, method!, _delay);
         }
 
         [Fact]
-        public void InvokeSync_Task_OF_int() {
-
+        public void InvokeMethod_ReturnsInt_WhenMethodReturnsTaskOfInt() {
             var building = new Building(7);
-            var sw = new Stopwatch();
-            sw.Start();
             var method = building.GetType().GetMethod("CountFloorsAsync");
-            var floorCount = InvokeHelper.InvokeMethod<int>(building, method, _delay);
-            sw.Stop();
+            var floorCount = InvokeHelper.InvokeMethod<int>(building, method!, _delay);
 
             Assert.Equal(7, floorCount);
         }
 
         [Fact]
-        public void InvokeSync_Task_OF_int_TO_decimal() {
-
+        public void InvokeMethod_ConvertsIntToDecimal_WhenMethodReturnsTaskOfInt() {
             var building = new Building(7);
-            var sw = new Stopwatch();
-            sw.Start();
             var method = building.GetType().GetMethod("CountFloorsAsync");
-            var floorCount = InvokeHelper.InvokeMethod<decimal>(building, method, _delay);
-            sw.Stop();
+            var floorCount = InvokeHelper.InvokeMethod<decimal>(building, method!, _delay);
 
             Assert.Equal(7, floorCount);
         }

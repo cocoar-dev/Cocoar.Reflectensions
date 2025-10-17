@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Cocoar.Reflectensions.Tests.TestClasses {
     public class Expandable1: ExpandableObject {
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public int Age { get; set; }
     }
@@ -15,6 +15,6 @@ namespace Cocoar.Reflectensions.Tests.TestClasses {
 
         public DateTime Now { get; set; }
 
-        public List<DateTime> Dates { get; set; }
+        public List<DateTime> Dates { get; set; } = new();
     }
 }

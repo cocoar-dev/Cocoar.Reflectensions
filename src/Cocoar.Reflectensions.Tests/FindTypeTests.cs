@@ -42,9 +42,6 @@ namespace Cocoar.Reflectensions.Tests {
         [InlineData("System.Collections.Generic.Dictionary<string, double>", typeof(Dictionary<string, double>))]
         [InlineData("System.Collections.Generic.Dictionary$2<string, System.Collections.Generic.List$1<string>>", typeof(Dictionary<string, List<string>>))]
         [InlineData("Cocoar.Reflectensions.Tests.TestClasses.CreateObjectTestClass<number>", typeof(CreateObjectTestClass<double>))]
-#pragma warning disable xUnit1025 // InlineData should be unique within the Theory it belongs to
-        [InlineData("Cocoar.Reflectensions.Tests.TestClasses.CreateObjectTestClass<number>", typeof(CreateObjectTestClass<System.Double>))]
-#pragma warning restore xUnit1025 // InlineData should be unique within the Theory it belongs to
         public void GenericStringToType(string typeString, Type expectedType) {
 
             var cMap = new Dictionary<string, string> {

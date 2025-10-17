@@ -4,9 +4,9 @@ using Cocoar.Reflectensions.Tests.TestClasses;
 using Xunit;
 
 namespace Cocoar.Reflectensions.Tests {
-    public class IDictionaryTests {
+    public class DictionaryExtensionTests {
         [Fact]
-        public void Merge() {
+        public void Merge_OverridesExistingKeysAndAddsNewKeys() {
 
             var exp1 = new Expandable1();
             exp1.Name = "Bernhard";
@@ -27,11 +27,10 @@ namespace Cocoar.Reflectensions.Tests {
 
             var mergedDict = dict.Merge(dict2);
 
-
+            Assert.Equal(3, mergedDict.Count);
             Assert.Equal("NewValue1", mergedDict["Key1"]);
             Assert.Equal("NewValue3", mergedDict["Key3"]);
             Assert.Equal("Value2", mergedDict["Key2"]);
-
         }
 
    

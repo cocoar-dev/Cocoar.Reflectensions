@@ -1,8 +1,8 @@
 ﻿namespace Cocoar.Reflectensions.Tests.TestClasses {
     public class CreateObjectTestClass<T> {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-        public T Data { get; set; }
+        public T Data { get; set; } = default!;
 
         public CreateObjectTestClass(string name) {
             Name = name;
