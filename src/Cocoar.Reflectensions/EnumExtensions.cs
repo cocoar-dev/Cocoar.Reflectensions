@@ -78,6 +78,10 @@ namespace Cocoar.Reflectensions
                 }
             }
 
+            if (!enums.Any()) {
+                result = null;
+                return false;
+            }
 
             result = Enum.Parse(enumType, String.Join(",", enums), ignoreCase);
             return result != null;

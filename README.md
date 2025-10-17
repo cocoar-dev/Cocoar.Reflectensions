@@ -449,6 +449,35 @@ This is the first release under the Cocoar organization. If you're migrating fro
 - ✅ All 166 tests passing
 - ✅ Apache 2.0 License
 
+## 🧪 Development
+
+### Running Tests
+
+All tests can be run using the standard .NET CLI:
+
+```bash
+dotnet test
+```
+
+### Code Coverage
+
+We use coverlet and ReportGenerator for code coverage analysis:
+
+```bash
+# Run tests with coverage and generate HTML report
+./run-coverage.ps1
+
+# View the report
+# Open: TestResults/CoverageReport/index.html
+```
+
+For detailed information about code coverage, see [docs/CODE_COVERAGE.md](docs/CODE_COVERAGE.md).
+
+**Current Coverage:**
+- Line Coverage: 36.7%
+- Branch Coverage: 37.3%
+- Target: ≥80% line coverage
+
 ## 🤝 Contributing
 
 Contributions are welcome! We follow the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
@@ -458,6 +487,7 @@ Ways to contribute:
 - 💡 Feature requests and implementations
 - 📖 Documentation improvements
 - 🔧 Code reviews and discussions
+- 🧪 Writing tests to improve coverage
 
 Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting PRs.
 

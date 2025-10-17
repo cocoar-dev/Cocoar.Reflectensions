@@ -13,26 +13,65 @@ namespace Cocoar.Reflectensions.ExtensionMethods
 
         #region Check Type
 
+        /// <summary>
+        /// Determines whether the specified type is a numeric type (e.g., int, double, decimal).
+        /// </summary>
+        /// <param name="type">The type to check.</param>
+        /// <returns>True if the type is numeric; otherwise, false.</returns>
         public static bool IsNumericType(this Type type)
         {
             return TypeLookupHelper.NumericTypes.Contains(type);
         }
 
+        /// <summary>
+        /// Determines whether the specified type is a generic type of the specified generic type definition.
+        /// </summary>
+        /// <param name="type">The type to check.</param>
+        /// <param name="genericType">The generic type definition (e.g., typeof(List&lt;&gt;)).</param>
+        /// <returns>True if the type matches the generic definition; otherwise, false.</returns>
+        /// <example>
+        /// <code>
+        /// var listOfStrings = typeof(List&lt;string&gt;);
+        /// bool isListType = listOfStrings.IsGenericTypeOf(typeof(List&lt;&gt;)); // true
+        /// </code>
+        /// </example>
         public static bool IsGenericTypeOf(this Type type, Type genericType)
         {
             return type.IsGenericType && type.GetGenericTypeDefinition() == genericType;
         }
 
+        /// <summary>
+        /// Determines whether the specified type is a generic type of the specified generic type definition.
+        /// </summary>
+        /// <typeparam name="T">The generic type definition to check against.</typeparam>
+        /// <param name="type">The type to check.</param>
+        /// <returns>True if the type matches the generic definition; otherwise, false.</returns>
+        /// <example>
+        /// <code>
+        /// var listOfStrings = typeof(List&lt;string&gt;);
+        /// bool isListType = listOfStrings.IsGenericTypeOf&lt;List&lt;&gt;&gt;(); // true
+        /// </code>
+        /// </example>
         public static bool IsGenericTypeOf<T>(this Type type)
         {
             return IsGenericTypeOf(type, typeof(T));
         }
 
+        /// <summary>
+        /// Determines whether the specified type is a nullable value type (Nullable&lt;T&gt;).
+        /// </summary>
+        /// <param name="type">The type to check.</param>
+        /// <returns>True if the type is Nullable&lt;T&gt;; otherwise, false.</returns>
         public static bool IsNullableType(this Type type)
         {
             return IsGenericTypeOf(type, typeof(Nullable<>));
         }
 
+        /// <summary>
+        /// Determines whether the specified type implements IEnumerable (excluding string and dictionaries).
+        /// </summary>
+        /// <param name="type">The type to check.</param>
+        /// <returns>True if the type is enumerable; otherwise, false.</returns>
         public static bool IsEnumerableType(this Type type)
         {
 
@@ -45,6 +84,11 @@ namespace Cocoar.Reflectensions.ExtensionMethods
             return type.GetInterfaces().Contains(typeof(IEnumerable));
         }
 
+        /// <summary>
+        /// Determines whether the specified type is a dictionary type (IDictionary or IDictionary&lt;,&gt;).
+        /// </summary>
+        /// <param name="type">The type to check.</param>
+        /// <returns>True if the type is a dictionary; otherwise, false.</returns>
         public static bool IsDictionaryType(this Type type)
         {
             return IsGenericTypeOf(type, typeof(IDictionary)) || 
@@ -53,6 +97,13 @@ namespace Cocoar.Reflectensions.ExtensionMethods
                    ImplementsInterface(type, typeof(IDictionary<,>));
         }
 
+        /// <summary>
+        /// Determines whether the specified type implements the specified interface.
+        /// </summary>
+        /// <param name="type">The type to check.</param>
+        /// <param name="interfaceType">The interface type to check for.</param>
+        /// <returns>True if the type implements the interface; otherwise, false.</returns>
+        /// <remarks>Supports generic interface definitions.</remarks>
         public static bool ImplementsInterface(this Type type, Type interfaceType)
         {
             if (interfaceType.IsGenericType || interfaceType.IsGenericTypeDefinition)
@@ -64,16 +115,34 @@ namespace Cocoar.Reflectensions.ExtensionMethods
                 .Contains(interfaceType);
         }
 
+        /// <summary>
+        /// Determines whether the specified type implements the specified interface.
+        /// </summary>
+        /// <typeparam name="T">The interface type to check for.</typeparam>
+        /// <param name="type">The type to check.</param>
+        /// <returns>True if the type implements the interface; otherwise, false.</returns>
         public static bool ImplementsInterface<T>(this Type type)
         {
             return ImplementsInterface(type, typeof(T));
         }
 
+        /// <summary>
+        /// Determines whether the specified type inherits from the specified class.
+        /// </summary>
+        /// <typeparam name="T">The base class type to check for.</typeparam>
+        /// <param name="type">The type to check.</param>
+        /// <returns>True if the type inherits from the specified class; otherwise, false.</returns>
         public static bool InheritFromClass<T>(this Type type)
         {
             return type.InheritFromClassLevel<T>() > 0;
         }
 
+        /// <summary>
+        /// Determines whether the specified type inherits from a class with the specified name.
+        /// </summary>
+        /// <param name="type">The type to check.</param>
+        /// <param name="from">The name of the base class to check for.</param>
+        /// <returns>True if the type inherits from the specified class; otherwise, false.</returns>
         public static bool InheritFromClass(this Type type, string from)
         {
             return InheritFromClassLevel(type, from) > 0;

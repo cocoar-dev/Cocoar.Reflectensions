@@ -4,9 +4,19 @@ using System.Reflection;
 
 namespace Cocoar.Reflectensions.ExtensionMethods
 {
+    /// <summary>
+    /// Provides extension methods for filtering and querying <see cref="MethodInfo"/> objects.
+    /// </summary>
     public static class MethodInfoExtensions
     {
 
+        /// <summary>
+        /// Determines whether the method has the specified name.
+        /// </summary>
+        /// <param name="methodInfo">The method to check.</param>
+        /// <param name="name">The name to compare.</param>
+        /// <param name="stringComparison">The comparison type to use.</param>
+        /// <returns>True if the method name matches; otherwise, false.</returns>
         public static bool HasName(this MethodInfo methodInfo, string name, StringComparison stringComparison = StringComparison.CurrentCulture)
         {
             if (methodInfo == null)
@@ -17,6 +27,13 @@ namespace Cocoar.Reflectensions.ExtensionMethods
             return methodInfo.Name.Equals(name, stringComparison);
         }
 
+        /// <summary>
+        /// Determines whether the method has the specified number of parameters.
+        /// </summary>
+        /// <param name="methodInfo">The method to check.</param>
+        /// <param name="parameterLength">The expected number of parameters.</param>
+        /// <param name="includeOptional">If true, counts optional parameters that can be omitted.</param>
+        /// <returns>True if the parameter count matches; otherwise, false.</returns>
         public static bool HasParametersLengthOf(this MethodInfo methodInfo, int parameterLength, bool includeOptional = false)
         {
             if (methodInfo == null)
@@ -39,6 +56,12 @@ namespace Cocoar.Reflectensions.ExtensionMethods
             return includeOptional && methodInfoParameters.Skip(parameterLength).All(p => p.IsOptional);
         }
 
+        /// <summary>
+        /// Determines whether the method has parameters of the specified types.
+        /// </summary>
+        /// <param name="methodInfo">The method to check.</param>
+        /// <param name="types">The expected parameter types in order.</param>
+        /// <returns>True if all parameter types match; otherwise, false.</returns>
         public static bool HasParametersOfType(this MethodInfo methodInfo, Type[] types)
         {
             if (methodInfo == null)
@@ -63,11 +86,25 @@ namespace Cocoar.Reflectensions.ExtensionMethods
             return match;
         }
 
+        /// <summary>
+        /// Determines whether the method is decorated with the specified attribute.
+        /// </summary>
+        /// <typeparam name="T">The attribute type to check for.</typeparam>
+        /// <param name="methodInfo">The method to check.</param>
+        /// <param name="inherit">If true, searches the inheritance chain.</param>
+        /// <returns>True if the attribute is present; otherwise, false.</returns>
         public static bool HasAttribute<T>(this MethodInfo methodInfo, bool inherit = false) where T : Attribute
         {
             return HasAttribute(methodInfo, typeof(T), inherit);
         }
 
+        /// <summary>
+        /// Determines whether the method is decorated with the specified attribute.
+        /// </summary>
+        /// <param name="methodInfo">The method to check.</param>
+        /// <param name="attributeType">The attribute type to check for.</param>
+        /// <param name="inherit">If true, searches the inheritance chain.</param>
+        /// <returns>True if the attribute is present; otherwise, false.</returns>
         public static bool HasAttribute(this MethodInfo methodInfo, Type attributeType, bool inherit = false)
         {
             if (methodInfo == null)

@@ -151,6 +151,9 @@ coverage*.info
 *.coverage
 *.coveragexml
 
+# Test Results and Coverage Reports
+TestResults/
+
 # NCrunch
 _NCrunch_*
 .*crunch*.local.xml
@@ -361,3 +364,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Editor backup files
+*.bak

@@ -9,12 +9,12 @@ namespace Cocoar.Reflectensions
     {
 
         public static IEnumerable<Claim> GetClaimsByType(this IEnumerable<Claim> claims, string type) {
-            return claims.Where(c => c.Type.Equals(type, StringComparison.CurrentCultureIgnoreCase));
+            return claims.Where(c => c.Type.Equals(type, StringComparison.OrdinalIgnoreCase));
         }
 
         public static Claim? GetFirstClaimByType(this IEnumerable<Claim> claims, string type)
         {
-            return claims.FirstOrDefault(c => c.Type.Equals(type, StringComparison.CurrentCultureIgnoreCase));
+            return claims.FirstOrDefault(c => c.Type.Equals(type, StringComparison.OrdinalIgnoreCase));
         }
 
         public static string? GetFirstClaimValueByType(this IEnumerable<Claim> claims, string type)
@@ -28,7 +28,7 @@ namespace Cocoar.Reflectensions
 
         public static IEnumerable<Claim> RemoveClaimsByType(this IEnumerable<Claim> claims, string type)
         {
-            return claims.Where(c => !c.Type.Equals(type, StringComparison.CurrentCultureIgnoreCase));
+            return claims.Where(c => !c.Type.Equals(type, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Cocoar.Reflectensions.Exceptions;
@@ -8,9 +9,18 @@ using Cocoar.Reflectensions.Internal;
 
 namespace Cocoar.Reflectensions.ExtensionMethods
 {
+    /// <summary>
+    /// Provides extension methods for object reflection and type conversion operations.
+    /// </summary>
     public static class ObjectReflectionExtensions
     {
 
+        /// <summary>
+        /// Determines whether the object's value equals any of the provided values.
+        /// </summary>
+        /// <param name="objectReflection">The object reflection wrapper.</param>
+        /// <param name="equalsTo">The values to compare against.</param>
+        /// <returns>True if the object equals any of the provided values; otherwise, false.</returns>
         public static bool EqualsToAnyOf(this IObjectReflection objectReflection, params object[] equalsTo)
         {
             var value = objectReflection.GetValue();
@@ -26,6 +36,15 @@ namespace Cocoar.Reflectensions.ExtensionMethods
             return false;
         }
 
+        /// <summary>
+        /// Converts the object to a boolean value with optional custom true values.
+        /// </summary>
+        /// <param name="objectReflection">The object reflection wrapper.</param>
+        /// <param name="trueValues">Optional custom values that should be considered true.</param>
+        /// <returns>The boolean representation of the object.</returns>
+        /// <remarks>
+        /// If no custom true values are provided, uses standard conversions (bool, int != 0, "yes", "true", etc.).
+        /// </remarks>
         public static bool ToBoolean(this IObjectReflection objectReflection, params object[] trueValues)
         {
             var value = objectReflection.GetValue();
@@ -56,7 +75,7 @@ namespace Cocoar.Reflectensions.ExtensionMethods
             }
 
 
-            if (str?.ToLower() == "yes")
+            if (str?.ToLower(CultureInfo.InvariantCulture) == "yes")
             {
                 return true;
             }
@@ -131,7 +150,7 @@ namespace Cocoar.Reflectensions.ExtensionMethods
             {
                 try
                 {
-                    outValue = Convert.ChangeType(value, type);
+                    outValue = Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
                     return true;
                 }
                 catch
@@ -143,7 +162,7 @@ namespace Cocoar.Reflectensions.ExtensionMethods
             {
                 try
                 {
-                    outValue = Convert.ChangeType(value, type);
+                    outValue = Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
                     return true;
                 }
                 catch
@@ -207,13 +226,200 @@ namespace Cocoar.Reflectensions.ExtensionMethods
             return (T?)To(objectReflection, typeof(T), defaultValue);
         }
 
+
         public static  T? To<T>(this IObjectReflection objectReflection)
         {
             return (T?)To(objectReflection, typeof(T));
         }
 
+        #region Hot Path Overloads for Generic ObjectReflection<T> - Auto-optimized conversions
+
+        /// <summary>
+        /// Hot path for int.Reflect().To&lt;string&gt;() - uses ToString() directly instead of complex conversion.
+        /// </summary>
+        public static TResult? To<TResult>(this ObjectReflection<int> objectReflection)
+        {
+            // Hot path: int to string
+            if (typeof(TResult) == typeof(string))
+            {
+                return (TResult)(object)objectReflection.GetTypedValue().ToString(CultureInfo.InvariantCulture);
+            }
+            
+            // Hot path: int to long
+            if (typeof(TResult) == typeof(long))
+            {
+                return (TResult)(object)(long)objectReflection.GetTypedValue();
+            }
+            
+            // Hot path: int to double
+            if (typeof(TResult) == typeof(double))
+            {
+                return (TResult)(object)(double)objectReflection.GetTypedValue();
+            }
+            
+            // Hot path: int to decimal
+            if (typeof(TResult) == typeof(decimal))
+            {
+                return (TResult)(object)(decimal)objectReflection.GetTypedValue();
+            }
+            
+            // Fall back to general conversion for other types
+            return ((IObjectReflection)objectReflection).To<TResult>();
+        }
+
+        /// <summary>
+        /// Hot path for long.Reflect().To&lt;string&gt;() - uses ToString() directly instead of complex conversion.
+        /// </summary>
+        public static TResult? To<TResult>(this ObjectReflection<long> objectReflection)
+        {
+            // Hot path: long to string
+            if (typeof(TResult) == typeof(string))
+            {
+                return (TResult)(object)objectReflection.GetTypedValue().ToString(CultureInfo.InvariantCulture);
+            }
+            
+            // Hot path: long to int (with range check)
+            if (typeof(TResult) == typeof(int))
+            {
+                var value = objectReflection.GetTypedValue();
+                if (value >= int.MinValue && value <= int.MaxValue)
+                {
+                    return (TResult)(object)(int)value;
+                }
+            }
+            
+            // Hot path: long to double
+            if (typeof(TResult) == typeof(double))
+            {
+                return (TResult)(object)(double)objectReflection.GetTypedValue();
+            }
+            
+            // Fall back to general conversion
+            return ((IObjectReflection)objectReflection).To<TResult>();
+        }
+
+        /// <summary>
+        /// Hot path for double.Reflect().To&lt;string&gt;() - uses ToString() directly instead of complex conversion.
+        /// </summary>
+        public static TResult? To<TResult>(this ObjectReflection<double> objectReflection)
+        {
+            // Hot path: double to string
+            if (typeof(TResult) == typeof(string))
+            {
+                return (TResult)(object)objectReflection.GetTypedValue().ToString(CultureInfo.InvariantCulture);
+            }
+            
+            // Hot path: double to int (with truncation)
+            if (typeof(TResult) == typeof(int))
+            {
+                var value = objectReflection.GetTypedValue();
+                if (value >= int.MinValue && value <= int.MaxValue)
+                {
+                    return (TResult)(object)(int)value;
+                }
+            }
+            
+            // Fall back to general conversion
+            return ((IObjectReflection)objectReflection).To<TResult>();
+        }
+
+        /// <summary>
+        /// Hot path for string.Reflect().To&lt;int&gt;() - uses Parse() directly instead of complex conversion.
+        /// </summary>
+        public static TResult? To<TResult>(this ObjectReflection<string> objectReflection)
+        {
+            var str = objectReflection.GetTypedValue();
+            
+            // Hot path: string to int
+            if (typeof(TResult) == typeof(int))
+            {
+                if (int.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var intResult))
+                {
+                    return (TResult)(object)intResult;
+                }
+            }
+            
+            // Hot path: string to long
+            if (typeof(TResult) == typeof(long))
+            {
+                if (long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var longResult))
+                {
+                    return (TResult)(object)longResult;
+                }
+            }
+            
+            // Hot path: string to double
+            if (typeof(TResult) == typeof(double))
+            {
+                if (double.TryParse(str, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var doubleResult))
+                {
+                    return (TResult)(object)doubleResult;
+                }
+            }
+            
+            // Hot path: string to bool
+            if (typeof(TResult) == typeof(bool))
+            {
+                if (bool.TryParse(str, out var boolResult))
+                {
+                    return (TResult)(object)boolResult;
+                }
+            }
+            
+            // Hot path: string to DateTime
+            if (typeof(TResult) == typeof(DateTime))
+            {
+                if (DateTime.TryParse(str, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateResult))
+                {
+                    return (TResult)(object)dateResult;
+                }
+            }
+            
+            // Fall back to general conversion
+            return ((IObjectReflection)objectReflection).To<TResult>();
+        }
+
+        /// <summary>
+        /// Hot path for DateTime.Reflect().To&lt;string&gt;() - uses ToString() directly instead of complex conversion.
+        /// </summary>
+        public static TResult? To<TResult>(this ObjectReflection<DateTime> objectReflection)
+        {
+            // Hot path: DateTime to string
+            if (typeof(TResult) == typeof(string))
+            {
+                return (TResult)(object)objectReflection.GetTypedValue().ToString(CultureInfo.InvariantCulture);
+            }
+            
+            // Fall back to general conversion
+            return ((IObjectReflection)objectReflection).To<TResult>();
+        }
+
+        /// <summary>
+        /// Hot path for bool.Reflect().To&lt;string&gt;() - uses ToString() directly instead of complex conversion.
+        /// </summary>
+        public static TResult? To<TResult>(this ObjectReflection<bool> objectReflection)
+        {
+            // Hot path: bool to string
+            if (typeof(TResult) == typeof(string))
+            {
+                return (TResult)(object)objectReflection.GetTypedValue().ToString(CultureInfo.InvariantCulture);
+            }
+            
+            // Hot path: bool to int
+            if (typeof(TResult) == typeof(int))
+            {
+                return (TResult)(object)(objectReflection.GetTypedValue() ? 1 : 0);
+            }
+            
+            // Fall back to general conversion
+            return ((IObjectReflection)objectReflection).To<TResult>();
+        }
+
+        #endregion
+
 
         public static bool TryAs(this IObjectReflection objectReflection, Type type, out object? outValue)
+
         {
             var value = objectReflection.GetValue();
 
@@ -301,7 +507,7 @@ namespace Cocoar.Reflectensions.ExtensionMethods
 
 
                 if (currentPropertyInfo == null)
-                    throw new Exception($"Path not found '{string.Join(".", processedPaths)}'");
+                    throw new PropertyNotFoundException($"Path not found '{string.Join(".", processedPaths)}'");
 
                 currentObject = currentPropertyInfo.GetValue(currentObject);
 

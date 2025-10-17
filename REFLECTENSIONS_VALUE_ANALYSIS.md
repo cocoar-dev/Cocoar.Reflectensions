@@ -458,10 +458,9 @@ SignalARRR.Client
 5. Add BenchmarkDotNet for performance baselines
 
 **Week 2:**
-1. Add System.Text.Json support (keep Newtonsoft for compatibility)
-2. Improve TypeHelper documentation
-3. Add code examples to README
-4. Mark low-value extensions as obsolete with alternatives
+1. Improve TypeHelper documentation
+2. Add code examples to README
+3. Mark low-value extensions as obsolete with alternatives
 
 **Week 3:**
 1. Final testing across all frameworks
@@ -614,7 +613,6 @@ Git Status:      ✅ Committed
 ### Next Steps (Phase 2 - Optional)
 
 **Future Enhancements (v7.1+):**
-- [ ] Add System.Text.Json support alongside Newtonsoft.Json
 - [ ] Address nullable reference warnings (73 remaining)
 - [ ] Add XML documentation for IntelliSense
 - [ ] Create benchmark project with BenchmarkDotNet

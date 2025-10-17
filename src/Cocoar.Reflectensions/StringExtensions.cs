@@ -6,26 +6,54 @@ using System.Text.RegularExpressions;
 using Cocoar.Reflectensions.Helper;
 
 namespace Cocoar.Reflectensions {
+    /// <summary>
+    /// Provides extension methods for string manipulation, validation, and type conversion operations.
+    /// </summary>
     public static class StringExtensions {
 
+        /// <summary>
+        /// Splits a string using a string separator.
+        /// </summary>
+        /// <param name="value">The string to split.</param>
+        /// <param name="split">The string separator.</param>
+        /// <param name="options">The string split options.</param>
+        /// <returns>An array of substrings.</returns>
         public static string[] Split(this string value, string split, StringSplitOptions options) {
 
             if (value == null) {
-                return new string[0];
+                return Array.Empty<string>();
             }
 
             return value.Split(new[] { split }, options);
 
         }
 
+        /// <summary>
+        /// Splits a string using a string separator with optional removal of empty entries.
+        /// </summary>
+        /// <param name="value">The string to split.</param>
+        /// <param name="split">The string separator.</param>
+        /// <param name="removeEmptyEntries">If true, removes empty entries from the result.</param>
+        /// <returns>An array of substrings.</returns>
         public static string[] Split(this string value, string split, bool removeEmptyEntries = false) {
             return Split(value, split, removeEmptyEntries ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
         }
         
+        /// <summary>
+        /// Trims the specified characters from the start and end of the string.
+        /// </summary>
+        /// <param name="value">The string to trim.</param>
+        /// <param name="trimCharacters">The strings containing characters to trim.</param>
+        /// <returns>The trimmed string.</returns>
         public static string Trim(this string value, params string[] trimCharacters) {
             return value?.Trim(String.Join("", trimCharacters).ToCharArray()) ?? "";
         }
         
+        /// <summary>
+        /// Trims the string and returns null if the result is empty.
+        /// </summary>
+        /// <param name="value">The string to trim.</param>
+        /// <returns>The trimmed string or null if empty.</returns>
         public static string? TrimToNull(this string? value) {
             if (value == null)
                 return null;
@@ -33,16 +61,34 @@ namespace Cocoar.Reflectensions {
             return ToNull(value.Trim());
         }
 
+        /// <summary>
+        /// Removes empty lines from the string.
+        /// </summary>
+        /// <param name="value">The string to process.</param>
+        /// <returns>The string with empty lines removed.</returns>
         public static string RemoveEmptyLines(this string value) {
             var val = Regex.Replace(value, @"^\s*$\n|\r", "", RegexOptions.Multiline);
             return val;
         }
 
+        /// <summary>
+        /// Removes the specified number of characters from the end of the string.
+        /// </summary>
+        /// <param name="value">The string to process.</param>
+        /// <param name="length">The number of characters to remove.</param>
+        /// <returns>The string with characters removed from the end.</returns>
         public static string RemoveEnd(this string value, int length)
         {
             return value.Substring(0, value.Length - length);
         }
 
+        /// <summary>
+        /// Removes the specified suffix from the end of the string if present.
+        /// </summary>
+        /// <param name="value">The string to process.</param>
+        /// <param name="remove">The suffix to remove.</param>
+        /// <param name="ignoreCase">If true, performs case-insensitive comparison.</param>
+        /// <returns>The string with the suffix removed if it was present.</returns>
         public static string RemoveEnd(this string value, string remove, bool ignoreCase = true)
         {
 
@@ -190,52 +236,52 @@ namespace Cocoar.Reflectensions {
         }
 
         public static int ToInt(this string value) {
-            return !IsInt(value) ? default : int.Parse(value);
+            return !IsInt(value) ? default : int.Parse(value, CultureInfo.InvariantCulture);
         }
         public static int? ToNullableInt(this string? value) {
             if (value == null)
                 return null;
 
-            if (int.TryParse(value, out var i)) {
+            if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var i)) {
                 return i;
             }
             return null;
         }
 
         public static decimal ToDecimal(this string value) {
-            return !IsNumeric(value) ? default : decimal.Parse(value);
+            return !IsNumeric(value) ? default : decimal.Parse(value, CultureInfo.InvariantCulture);
         }
         public static decimal? ToNullableDecimal(this string value) {
             if (value == null)
                 return null;
 
-            if (decimal.TryParse(value, out var i)) {
+            if (decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out var i)) {
                 return i;
             }
             return null;
         }
 
         public static float ToFloat(this string value) {
-            return !IsInt(value) ? default : float.Parse(value);
+            return !IsInt(value) ? default : float.Parse(value, CultureInfo.InvariantCulture);
         }
         public static float? ToNullableFloat(this string value) {
             if (value == null)
                 return null;
 
-            if (float.TryParse(value, out var i)) {
+            if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var i)) {
                 return i;
             }
             return null;
         }
 
         public static long ToLong(this string value) {
-            return !IsLong(value) ? default : long.Parse(value);
+            return !IsLong(value) ? default : long.Parse(value, CultureInfo.InvariantCulture);
         }
         public static long? ToNullableLong(this string value) {
             if (value == null)
                 return null;
 
-            if (long.TryParse(value, out var i)) {
+            if (long.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var i)) {
                 return i;
             }
             return null;
@@ -245,14 +291,14 @@ namespace Cocoar.Reflectensions {
             if (!IsDouble(value))
                 return default;
 
-            return double.Parse(value);
+            return double.Parse(value, CultureInfo.InvariantCulture);
 
         }
         public static double? ToNullableDouble(this string value) {
             if (value == null)
                 return null;
 
-            if (double.TryParse(value, out var i)) {
+            if (double.TryParse(value, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var i)) {
                 return i;
             }
             return null;

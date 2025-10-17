@@ -1,0 +1,13 @@
+// CURRENT APPROACH (with boxing)
+int value = 123;
+var result1 = value.Reflect().To<string>();
+// Allocations: 1 box (int → object) + 1 ObjectReflection instance
+
+// PROPOSED APPROACH (zero-cost)
+int value = 123;
+var result2 = value.Reflect().To<string>();
+// Allocations: 0 (struct on stack, no boxing)
+
+// BENCHMARK RESULTS (estimated):
+// Current:  ~50ns, 40 bytes allocated
+// Proposed: ~10ns, 0 bytes allocated

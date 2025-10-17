@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
@@ -64,7 +65,7 @@ namespace Cocoar.Reflectensions.Helper {
 			{
 				int digit = Digits.IndexOf(s[i]);
 				if (digit < 0)
-					throw new FormatException(string.Format("Invalid Base58 character `{0}` at position {1}", s[i], i));
+					throw new FormatException(string.Format(CultureInfo.InvariantCulture, "Invalid Base58 character `{0}` at position {1}", s[i], i));
 				intData = intData * 58 + digit;
 			}
 

@@ -10,10 +10,16 @@ namespace Cocoar.Reflectensions.Helper
     {
         
         /// <summary>
-        /// Find a type from string
+        /// Finds a type from its string representation, supporting complex generic types.
         /// </summary>
-        /// <param name="typeName">textual representation of the type</param>
-        /// <returns></returns>
+        /// <param name="typeName">The textual representation of the type (e.g., "Dictionary&lt;string, List&lt;int&gt;&gt;").</param>
+        /// <returns>The found <see cref="Type"/> or null if not found.</returns>
+        /// <example>
+        /// <code>
+        /// var type = TypeHelper.FindType("System.String");
+        /// var genericType = TypeHelper.FindType("Dictionary&lt;string, int&gt;");
+        /// </code>
+        /// </example>
         public static Type? FindType(string typeName)
         {
             return FindType(typeName, new Dictionary<string, string>());
@@ -21,11 +27,22 @@ namespace Cocoar.Reflectensions.Helper
 
 
         /// <summary>
-        /// Find a type by name
+        /// Finds a type by name with custom type mapping support for cross-language scenarios.
         /// </summary>
-        /// <param name="typeName">textual representation of the type</param>
-        /// <param name="customTypeMapping">custom mapping for types, like 'number' => 'double'</param>
-        /// <returns></returns>
+        /// <param name="typeName">The textual representation of the type.</param>
+        /// <param name="customTypeMapping">Custom type mappings (e.g., "number" => "double" for TypeScript interop).</param>
+        /// <returns>The found <see cref="Type"/> or null if not found.</returns>
+        /// <remarks>
+        /// This method supports complex generic types, arrays, and nullable types.
+        /// The type cache improves performance for repeated lookups.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// var mapping = new Dictionary&lt;string, string&gt; { ["number"] = "double" };
+        /// var type = TypeHelper.FindType("Dictionary&lt;string, number&gt;", mapping);
+        /// // Results in Dictionary&lt;string, double&gt;
+        /// </code>
+        /// </example>
         public static Type? FindType(string typeName, IDictionary<string, string> customTypeMapping)
         {
 
@@ -87,10 +104,13 @@ namespace Cocoar.Reflectensions.Helper
 
 
         /// <summary>
-        /// Normalizes complex type names to runtime friendly type names
+        /// Normalizes complex type names (e.g., "Dictionary&lt;string, int&gt;") to .NET runtime format (e.g., "System.Collections.Generic.Dictionary`2[System.String,System.Int32]").
         /// </summary>
-        /// <param name="typeName">textual representation of the type</param>
-        /// <returns></returns>
+        /// <param name="typeName">The human-readable textual representation of the type.</param>
+        /// <returns>The normalized .NET runtime type name.</returns>
+        /// <remarks>
+        /// Converts friendly generic syntax to CLR-compatible type names with backtick notation and bracket-enclosed type arguments.
+        /// </remarks>
         public static string NormalizeTypeName(string typeName)
         {
             return NormalizeTypeName(typeName, new Dictionary<string, string>());
@@ -112,7 +132,7 @@ namespace Cocoar.Reflectensions.Helper
             }
 
             var arrayDepth = 0;
-            while (typeName.EndsWith("[]"))
+            while (typeName.EndsWith("[]", StringComparison.Ordinal))
             {
                 arrayDepth++;
                 typeName = typeName.Remove(typeName.Length - 2);
@@ -141,7 +161,7 @@ namespace Cocoar.Reflectensions.Helper
                 var match = regex.Match(typeName);
 
                 if (!match.Success)
-                    throw new Exception($"can't parse '{typeName}' to TypeDefinition");
+                    throw new InvalidOperationException($"can't parse '{typeName}' to TypeDefinition");
 
                 var fqn = match.Groups["fqn"].Value;
 

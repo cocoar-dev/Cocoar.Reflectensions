@@ -8,10 +8,27 @@ using Cocoar.Reflectensions.ExtensionMethods;
 namespace Cocoar.Reflectensions.Helper
 {
 
-
+    /// <summary>
+    /// Provides helper methods for dynamically invoking methods with support for async/await patterns.
+    /// </summary>
     public static class InvokeHelper
     {
 
+        /// <summary>
+        /// Invokes a void method synchronously, automatically handling Task-returning methods.
+        /// </summary>
+        /// <param name="instance">The instance to invoke the method on, or null for static methods.</param>
+        /// <param name="methodInfo">The <see cref="MethodInfo"/> representing the method to invoke.</param>
+        /// <param name="parameters">The parameters to pass to the method.</param>
+        /// <remarks>
+        /// If the method returns Task or Task&lt;T&gt;, this method will synchronously wait for completion.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// var method = typeof(MyClass).GetMethod("DoWork");
+        /// InvokeHelper.InvokeVoidMethod(myInstance, method, arg1, arg2);
+        /// </code>
+        /// </example>
         public static void InvokeVoidMethod(object? instance, MethodInfo methodInfo, params object[] parameters)
         {
             if (methodInfo.IsStatic)
@@ -35,6 +52,24 @@ namespace Cocoar.Reflectensions.Helper
 
             methodInfo.Invoke(instance, enumerable);
         }
+        
+        /// <summary>
+        /// Invokes a method and returns its result, with automatic type conversion and async/await support.
+        /// </summary>
+        /// <typeparam name="T">The expected return type.</typeparam>
+        /// <param name="instance">The instance to invoke the method on, or null for static methods.</param>
+        /// <param name="methodInfo">The <see cref="MethodInfo"/> representing the method to invoke.</param>
+        /// <param name="parameters">The parameters to pass to the method.</param>
+        /// <returns>The result of the method invocation, converted to type T.</returns>
+        /// <remarks>
+        /// Automatically handles Task&lt;T&gt; return types and performs type conversion if needed.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// var method = typeof(Calculator).GetMethod("Add");
+        /// int result = InvokeHelper.InvokeMethod&lt;int&gt;(calculator, method, 5, 3);
+        /// </code>
+        /// </example>
         public static T? InvokeMethod<T>(object? instance, MethodInfo methodInfo, params object[] parameters)
         {
 
@@ -95,7 +130,7 @@ namespace Cocoar.Reflectensions.Helper
                 returnType = methodInfo.ReturnType.GenericTypeArguments[0];
             }
 
-            object returnObject;
+            object? returnObject;
 
             if (isTaskReturn)
             {
@@ -108,8 +143,19 @@ namespace Cocoar.Reflectensions.Helper
                 returnObject = methodInfo.Invoke(instance, enumerable);
             }
 
-            return returnObject;
+            return returnObject!;
         }
+        
+        /// <summary>
+        /// Asynchronously invokes a void method, automatically handling both synchronous and Task-returning methods.
+        /// </summary>
+        /// <param name="instance">The instance to invoke the method on, or null for static methods.</param>
+        /// <param name="methodInfo">The <see cref="MethodInfo"/> representing the method to invoke.</param>
+        /// <param name="parameters">The parameters to pass to the method.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        /// <remarks>
+        /// Synchronous methods will be wrapped in Task.Run, while async methods are awaited directly.
+        /// </remarks>
         public static async Task InvokeVoidMethodAsync(object? instance, MethodInfo methodInfo, params object[] parameters)
         {
 
@@ -135,6 +181,19 @@ namespace Cocoar.Reflectensions.Helper
             await Task.Run(() => methodInfo.Invoke(instance, enumerable));
 
         }
+        
+        /// <summary>
+        /// Asynchronously invokes a method and returns its result, with automatic type conversion.
+        /// </summary>
+        /// <typeparam name="T">The expected return type.</typeparam>
+        /// <param name="instance">The instance to invoke the method on, or null for static methods.</param>
+        /// <param name="methodInfo">The <see cref="MethodInfo"/> representing the method to invoke.</param>
+        /// <param name="parameters">The parameters to pass to the method.</param>
+        /// <returns>A task representing the asynchronous operation, containing the method result converted to type T.</returns>
+        /// <remarks>
+        /// Handles both synchronous methods (wrapped in Task.Run) and async Task&lt;T&gt; methods.
+        /// Performs automatic type conversion if needed.
+        /// </remarks>
         public static async Task<T?> InvokeMethodAsync<T>(object? instance, MethodInfo methodInfo, params object[] parameters)
         {
 
@@ -201,12 +260,12 @@ namespace Cocoar.Reflectensions.Helper
             if (isTaskVoid)
             {
                 await (Task)methodInfo.Invoke(instance, enumerable)!;
-                return default;
+                return default!;
             }
 
             var isTaskReturn = methodInfo.ReturnType.IsGenericType && methodInfo.ReturnType.GetGenericTypeDefinition() == typeof(Task<>);
 
-            object returnObject;
+            object? returnObject;
 
             if (isTaskReturn)
             {
@@ -221,7 +280,7 @@ namespace Cocoar.Reflectensions.Helper
                 returnObject = await Task.Run(() => methodInfo.Invoke(instance, enumerable)!);
             }
 
-            return returnObject;
+            return returnObject!;
 
         }
 

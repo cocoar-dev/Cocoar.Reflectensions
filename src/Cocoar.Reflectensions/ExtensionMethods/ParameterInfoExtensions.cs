@@ -28,7 +28,7 @@ namespace Cocoar.Reflectensions.ExtensionMethods
                 throw new ArgumentNullException(nameof(parameterInfo));
             }
 
-            return parameterInfo.GetCustomAttributes().Any(attr => attr.GetType().Name.Equals(attributeName));
+            return parameterInfo.GetCustomAttributes().Any(attr => attr.GetType().Name.Equals(attributeName, StringComparison.Ordinal));
         }
     }
 }

@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Cocoar.Reflectensions\Cocoar.Reflectensions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cocoar.Reflectensions.Tests" />
+  </ItemGroup>
+
 </Project>

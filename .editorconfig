@@ -127,3 +127,116 @@ resharper_loop_can_be_converted_to_query_highlighting = hint
 resharper_for_can_be_converted_to_foreach_highlighting = none
 resharper_loop_can_be_converted_to_query_highlighting = none
 resharper_boxing_allocation_highlighting = error
+
+# ============================================================================
+# Code Analysis Rules
+# ============================================================================
+
+[*.cs]
+# CA1707: Identifiers should not contain underscores - Test method names often use underscores for readability
+dotnet_diagnostic.CA1707.severity = none
+
+# CA1711: Identifiers should not have incorrect suffix - Enum<T> is intentional
+dotnet_diagnostic.CA1711.severity = none
+
+# CA1716: Identifiers should not match keywords - Enum<T> is intentional
+dotnet_diagnostic.CA1716.severity = none
+
+# CA1720: Identifier contains type name - Sometimes necessary for clarity
+dotnet_diagnostic.CA1720.severity = suggestion
+
+# CA1710: Identifiers should have correct suffix
+dotnet_diagnostic.CA1710.severity = suggestion
+
+# CA2211: Non-constant fields should not be visible - Some public fields are intentional
+dotnet_diagnostic.CA2211.severity = suggestion
+
+# CA1051: Do not declare visible instance fields
+dotnet_diagnostic.CA1051.severity = suggestion
+
+# CA1852: Seal internal types - Performance optimization for test classes
+dotnet_diagnostic.CA1852.severity = suggestion
+
+# CA1000: Do not declare static members on generic types - Sometimes necessary
+dotnet_diagnostic.CA1000.severity = suggestion
+
+# CA1822: Mark members as static - Sometimes intentional for extensibility
+dotnet_diagnostic.CA1822.severity = suggestion
+
+# CA1305: Specify IFormatProvider - Enable but as warning
+dotnet_diagnostic.CA1305.severity = warning
+
+# CA1309: Use ordinal string comparison - Enable
+dotnet_diagnostic.CA1309.severity = warning
+
+# CA1310: Specify StringComparison for correctness
+dotnet_diagnostic.CA1310.severity = warning
+
+# CA1304: Specify CultureInfo
+dotnet_diagnostic.CA1304.severity = warning
+
+# CA1311: Specify a culture or use an invariant version
+dotnet_diagnostic.CA1311.severity = warning
+
+# CA2201: Do not raise reserved exception types - Enable
+dotnet_diagnostic.CA2201.severity = suggestion
+
+# CA2208: Instantiate argument exceptions correctly
+dotnet_diagnostic.CA2208.severity = suggestion
+
+# CA1825: Avoid zero-length array allocations - Use Array.Empty<T>()
+dotnet_diagnostic.CA1825.severity = suggestion
+
+# CA1861: Avoid constant arrays as arguments
+dotnet_diagnostic.CA1861.severity = suggestion
+
+# CA1510: Use ArgumentNullException throw helper
+dotnet_diagnostic.CA1510.severity = suggestion
+
+# CA2263: Prefer generic overload when available
+dotnet_diagnostic.CA2263.severity = suggestion
+
+# CA1805: Do not initialize unnecessarily
+dotnet_diagnostic.CA1805.severity = suggestion
+
+# CA1841: Prefer Dictionary Contains methods
+dotnet_diagnostic.CA1841.severity = warning
+
+# CA1847: Use string.Contains(char) instead of string.Contains(string)
+dotnet_diagnostic.CA1847.severity = warning
+
+# CA1850: Prefer static HashData method over ComputeHash
+dotnet_diagnostic.CA1850.severity = warning
+
+# CA1854: Prefer the IDictionary.TryGetValue(TKey, out TValue) method
+dotnet_diagnostic.CA1854.severity = warning
+
+# CA1859: Use concrete types when possible for improved performance
+dotnet_diagnostic.CA1859.severity = suggestion
+
+# CA1860: Avoid using 'Enumerable.Any()' extension method
+dotnet_diagnostic.CA1860.severity = suggestion
+
+# CA1514: Avoid redundant length argument
+dotnet_diagnostic.CA1514.severity = suggestion
+
+# CA1841: Prefer Dictionary Contains methods - Already fixed line 209
+dotnet_diagnostic.CA1841.severity = suggestion
+
+# CA1847: Use string.Contains(char) instead of string.Contains(string) - Already fixed line 211
+dotnet_diagnostic.CA1847.severity = suggestion
+
+# CA1850: Prefer static HashData method over ComputeHash - Already fixed line 213
+dotnet_diagnostic.CA1850.severity = suggestion
+
+# CA1854: Prefer the IDictionary.TryGetValue(TKey, out TValue) method - Already fixed line 215
+dotnet_diagnostic.CA1854.severity = suggestion
+
+[**/*Tests.cs]
+# Relax rules for test files
+dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA1852.severity = none
+dotnet_diagnostic.CA1822.severity = none
+dotnet_diagnostic.CA2201.severity = suggestion
+dotnet_diagnostic.CA1305.severity = suggestion
+dotnet_diagnostic.CA1861.severity = none
