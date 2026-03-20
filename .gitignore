@@ -369,3 +369,8 @@ FodyWeavers.xsd
 
 # Local working files (not committed)
 .local/
+
+# VitePress documentation
+website/node_modules/
+website/.vitepress/cache/
+website/.vitepress/dist/

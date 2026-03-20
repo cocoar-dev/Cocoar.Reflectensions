@@ -9,9 +9,39 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish:
-    # Only process releases from develop branch
+  validate-version:
+    name: Validate & Extract Version
     if: github.event.release.target_commitish == 'develop'
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.VERSION }}
+    steps:
+      - name: Extract and validate release version
+        id: version
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          echo "Release tag: $TAG"
+
+          # Remove 'v' prefix if present
+          if [[ "$TAG" =~ ^v[0-9] ]]; then
+            VERSION="${TAG#v}"
+          else
+            echo "::error ::Tag must start with 'v' followed by version number (e.g., v1.2.3)"
+            exit 1
+          fi
+
+          # Validate it's a proper release version (X.Y.Z format, no suffix)
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error ::Invalid release version format. Expected X.Y.Z (e.g., 1.2.3), got: $VERSION"
+            exit 1
+          fi
+
+          echo "Using release version: $VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+  publish:
+    name: Pack & Publish to NuGet
+    needs: [validate-version]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -31,34 +61,12 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Extract and validate release version
-        run: |
-          TAG="${{ github.event.release.tag_name }}"
-          echo "Release tag: $TAG"
-          
-          # Remove 'v' prefix if present
-          if [[ "$TAG" =~ ^v[0-9] ]]; then
-            VERSION="${TAG#v}"
-          else
-            echo "::error ::Tag must start with 'v' followed by version number (e.g., v1.2.3)"
-            exit 1
-          fi
-          
-          # Validate it's a proper release version (X.Y.Z format, no suffix)
-          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "::error ::Invalid release version format. Expected X.Y.Z (e.g., 1.2.3), got: $VERSION"
-            exit 1
-          fi
-          
-          echo "Using release version: $VERSION"
-          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
-
       - name: Restore dependencies
         run: dotnet restore
         working-directory: ./src
 
       - name: Build solution (stable)
-        run: dotnet build -c Release --no-restore -p:Version=${{ env.RELEASE_VERSION }} -p:AssemblyVersion=${{ env.RELEASE_VERSION }} -p:FileVersion=${{ env.RELEASE_VERSION }}
+        run: dotnet build -c Release --no-restore -p:Version=${{ needs.validate-version.outputs.version }} -p:AssemblyVersion=${{ needs.validate-version.outputs.version }} -p:FileVersion=${{ needs.validate-version.outputs.version }}
         working-directory: ./src
 
       - name: Run tests
@@ -66,7 +74,7 @@ jobs:
         working-directory: ./src
 
       - name: Pack NuGet packages (stable)
-        run: dotnet pack -c Release --no-restore /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg -o ../artifacts -p:Version=${{ env.RELEASE_VERSION }}
+        run: dotnet pack -c Release --no-restore /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg -o ../artifacts -p:Version=${{ needs.validate-version.outputs.version }}
         working-directory: ./src
 
       - name: Ensure packages exist
@@ -78,7 +86,7 @@ jobs:
       - name: Upload artifacts (audit)
         uses: actions/upload-artifact@v4
         with:
-          name: packages-${{ env.RELEASE_VERSION }}
+          name: packages-${{ needs.validate-version.outputs.version }}
           path: artifacts
           retention-days: 7
 
@@ -90,3 +98,62 @@ jobs:
           for p in artifacts/*.nupkg artifacts/*.snupkg; do
             dotnet nuget push "$p" --source https://api.nuget.org/v3/index.json --api-key "$NUGET_API_KEY" --skip-duplicate
           done
+
+  deploy-docs:
+    name: Deploy Documentation
+    needs: [validate-version, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        working-directory: website
+        run: npm ci
+
+      - name: Build VitePress
+        working-directory: website
+        run: npx vitepress build
+
+      - name: Extract docs version
+        id: docs-version
+        env:
+          VERSION: ${{ needs.validate-version.outputs.version }}
+        run: |
+          MAJOR=$(echo "$VERSION" | cut -d. -f1)
+          MINOR=$(echo "$VERSION" | cut -d. -f2)
+          echo "value=v${MAJOR}.${MINOR}" >> $GITHUB_OUTPUT
+
+      - name: Package
+        run: cd website/.vitepress/dist && zip -r $GITHUB_WORKSPACE/docs.zip .
+
+      - name: Upload to Shelf
+        env:
+          KEY: ${{ secrets.SHELF_API_KEY }}
+          URL: ${{ secrets.SHELF_BASE_URL }}
+          VER: ${{ steps.docs-version.outputs.value }}
+        run: |
+          echo "Deploying reflectensions docs $VER to $URL"
+          curl -f -X POST \
+            -H "Authorization: Bearer $KEY" \
+            -H "Content-Type: application/zip" \
+            --data-binary @$GITHUB_WORKSPACE/docs.zip \
+            "${URL}/api/products/reflectensions/versions/${VER}"
+
+      - name: Docs deployment summary
+        run: |
+          echo "### Documentation Deployed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Product:** reflectensions" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ steps.docs-version.outputs.value }}" >> $GITHUB_STEP_SUMMARY
+          echo "**URL:** ${{ secrets.SHELF_BASE_URL }}/reflectensions/" >> $GITHUB_STEP_SUMMARY
