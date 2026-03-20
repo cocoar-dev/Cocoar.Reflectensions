@@ -7,6 +7,8 @@
 
 Advanced reflection utilities for .NET — type parsing, fluent reflection extensions, smart type conversion, and dynamic invocation. Zero external dependencies.
 
+**[Documentation](https://docs.cocoar.dev/reflectensions)**
+
 ## Install
 
 ```shell
