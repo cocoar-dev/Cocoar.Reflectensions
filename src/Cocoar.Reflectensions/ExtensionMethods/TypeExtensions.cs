@@ -195,7 +195,7 @@ namespace Cocoar.Reflectensions.ExtensionMethods
 
         public static bool NotEquals<T>(this Type type)
         {
-            return !Equals<T>(typeof(T));
+            return !type.Equals<T>();
         }
 
         public static bool HasAttribute<T>(this Type type, bool inherit = false) where T : Attribute
