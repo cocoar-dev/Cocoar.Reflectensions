@@ -5,7 +5,7 @@ All notable changes to Reflectensions will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.1] - Unreleased
+## [1.0.1] - 2025-03-23
 
 ### Fixed
 - **`TypeExtensions.NotEquals<T>()`** — Method ignored the `this Type type` parameter and always compared `typeof(T) == typeof(T)`, returning `false` in all cases. Now correctly compares the source type against `typeof(T)`.
