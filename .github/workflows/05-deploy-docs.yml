@@ -49,7 +49,7 @@ jobs:
             -H "Authorization: Bearer $KEY" \
             -H "Content-Type: application/zip" \
             --data-binary @$GITHUB_WORKSPACE/docs.zip \
-            "${URL}/api/products/reflectensions/versions/${VER}"
+            "${URL}/_api/products/reflectensions/versions/${VER}"
 
       - name: Deployment summary
         run: |
