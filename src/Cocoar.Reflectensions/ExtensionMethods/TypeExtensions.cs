@@ -161,6 +161,9 @@ namespace Cocoar.Reflectensions.ExtensionMethods
         public static bool IsImplicitCastableTo(this Type type, Type to)
         {
 
+            if (to == typeof(object))
+                return true;
+
             if (IsNumericType(type) && IsNumericType(to))
             {
                 if (TypeLookupHelper.ImplicitNumericConversionsTable[type].Contains(to))

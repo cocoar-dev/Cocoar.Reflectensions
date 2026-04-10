@@ -5,6 +5,13 @@ All notable changes to Reflectensions will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2]
+
+### Fixed
+- **`TypeExtensions.IsImplicitCastableTo()`** — Did not recognize that every type is implicitly assignable to `object`. Interface types (e.g. `IAsyncEnumerable<T>`) failed the check because they have no `BaseType` in .NET metadata, causing `InheritFromClass<object>()` to return `false`. This made `InvokeHelper.InvokeMethodAsync<object>()` throw for any method returning an interface type.
+
+---
+
 ## [1.0.1] - 2025-03-23
 
 ### Fixed

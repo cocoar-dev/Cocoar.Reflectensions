@@ -13,8 +13,17 @@ namespace Cocoar.Reflectensions.Tests
 
         [Theory]
         [InlineData(typeof(Camaro), typeof(Truck))]
+        [InlineData(typeof(string), typeof(object))]
+        [InlineData(typeof(int), typeof(object))]
+        [InlineData(typeof(Camaro), typeof(object))]
         public void IsImplicitCastableTo_ReturnsTrue_WhenTypeIsCastable(Type from, Type to) {
             var isCastable = from.IsImplicitCastableTo(to);
+            Assert.True(isCastable);
+        }
+
+        [Fact]
+        public void IsImplicitCastableTo_Object_ReturnsTrueForInterfaceTypes() {
+            var isCastable = typeof(IAsyncEnumerable<object>).IsImplicitCastableTo(typeof(object));
             Assert.True(isCastable);
         }
 
